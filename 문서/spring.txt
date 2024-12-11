@@ -99,10 +99,12 @@
 - 버전 : 3.4.0
 - Metadata : Group(com.dw), Artifact(프로젝트명) Packaging(jar), Java(21)
 - 의존성 : Web, JPA, MySQL
+
 2. 폴더별 설명
 - src/main/java/com/dw/프로젝트명 : 코드영역. java파일들이 위치함
 - src/main/resources/application.properties : 환경설정파일
 - pom.xml : 의존성 정의, 빌드환경 세팅
+
 3. application.properties
 - 데이터베이스 연결 정보를 기록
 spring.datasource.url=jdbc:mysql://localhost:3306/testdb
@@ -110,7 +112,10 @@ spring.datasource.username=root
 spring.datasource.password=root
 - 이외 각종 스프링관련 세팅을 설정하는 파일임
 
-
+4. pom.xml
+- Maven에서 사용되는 프로젝트 객체 모델 파일로서 프로젝트의 구성정보와 의존성을 정의
+- 여러 프로젝트 정보를 정의하고 외부 라이브러리 의존성을 관리
+- 빌드 설정을 정의
 
 
 

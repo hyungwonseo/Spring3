@@ -13,7 +13,7 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    @GetMapping("/findallcustomer")
+    @GetMapping("/find-all-customers")
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }

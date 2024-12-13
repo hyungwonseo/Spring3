@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EmployeeRepository {
@@ -81,4 +83,37 @@ public class EmployeeRepository {
         }
         return employee;
     }
+
+    public List<Map<String,Object>> getEmployeesWithDepartName() {
+        String query = "select 이름, 입사일, 부서명 from 사원 "
+                + "inner join 부서 on 사원.부서번호 = 부서.부서번호";
+        List<Map<String, Object>> employees = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(
+                URL, USER, PASSWORD);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query)) {
+            while(resultSet.next()) {
+                Map<String, Object> employee = new HashMap<>();
+                employee.put("이름", resultSet.getString("이름"));
+                employee.put("입사일", resultSet.getString("입사일"));
+                employee.put("부서명", resultSet.getString("부서명"));
+                employees.add(employee);
+            }
+            for (Map<String,Object> employee : employees) {
+                System.out.println(employee);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
 }
+
+
+
+
+
+
+
+
+

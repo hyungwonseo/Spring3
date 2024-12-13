@@ -2,13 +2,19 @@
 
 1. 제품번호를 기준으로 제품 정보를 조회하는 API
 GET /api/products/{productNumber}
+예) localhost:8080/api/products/1
+
 2. 주문번호를 기준으로 주문 정보를 조회하는 API
 GET /api/orders/{orderNumber}
+예) localhost:8080/api/orders/H0248
+
 3. 부서번호와 직위를 기준으로 해당 부서에 근무하는 특정 직위의 사원 정보를 조회하는 API
 GET /api/employees/{departmentNumber}/{position}
+예) localhost:8080/api/employees/A1/사원
+
 4. 제품번호와 고객번호를 기준으로 해당 제품을 주문한 특정 고객의 주문 내역을 조회하는 API
 GET /api/orders/{productNumber}/{customerId}
-
+예) localhost:8080/api/orders/1/사원/NETVI
 
 
 

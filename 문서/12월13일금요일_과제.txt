@@ -14,7 +14,7 @@ GET /api/employees/{departmentNumber}/{position}
 
 4. 제품번호와 고객번호를 기준으로 해당 제품을 주문한 특정 고객의 주문 내역을 조회하는 API
 GET /api/orders/{productNumber}/{customerId}
-예) localhost:8080/api/orders/1/사원/NETVI
+예) localhost:8080/api/orders/1/NETVI
 
 
 

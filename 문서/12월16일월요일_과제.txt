@@ -29,6 +29,7 @@ POST /api/post/employee
 4. 제품테이블의 정보를 수정하는 API
 PUT /api/put/product/price
 제품 객체를 JSON으로 전달하여 제품번호를 기준으로 제품을 찾은 후 나머지 컬럼은 전달받은 정보로 모두 수정함
+제품번호 81, 제품명 태양초고추장, 포장단위 300 g pkgs. 단가 5100 재고 130
 
 5. 제품테이블의 정보를 삭제하는 API
 DELETE /api/delete/product?id=

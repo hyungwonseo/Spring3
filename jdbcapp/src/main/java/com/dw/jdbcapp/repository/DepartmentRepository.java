@@ -67,6 +67,19 @@ public class DepartmentRepository {
         }
         return department;
     }
+
+    public String deleteDepartment(String id) {
+        String query = "delete from 부서 where 부서번호 = ?";
+        try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, id);
+            pstmt.executeUpdate();
+            System.out.println("DELETE 성공");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
 
 

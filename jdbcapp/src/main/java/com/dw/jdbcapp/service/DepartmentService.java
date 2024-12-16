@@ -31,6 +31,10 @@ public class DepartmentService {
     public Department updateDepartment(Department department) {
         return departmentRepository.updateDepartment(department);
     }
+
+    public String deleteDepartment(String id) {
+        return departmentRepository.deleteDepartment(id);
+    }
 }
 
 

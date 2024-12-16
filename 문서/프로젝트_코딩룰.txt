@@ -1,0 +1,9 @@
+우리반 코딩룰
+
+1. 모든 @RestController에서 사용하는 REST api 는 /api 로 시작
+2. @Controller에서 사용하는 api는 /api를 붙이지 않는다!!
+3. HTTP method는 아래 용도에 맞춰 메서드를 사용한다
+    @GETMapping = select
+    @POSTMapping = insert
+    @PUTMapping = update
+    @DELETEMapping = delete 

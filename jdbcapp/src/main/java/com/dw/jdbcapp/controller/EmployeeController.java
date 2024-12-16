@@ -37,9 +37,20 @@ public class EmployeeController {
     public List<Map<String,Object>> getEmployeesWithDepartName() {
         return employeeService.getEmployeesWithDepartName();
     }
+
     @GetMapping("/employees/department2")
     public List<EmployeeDepartmentDTO> getEmployeesWithDepartName2() {
         return employeeService.getEmployeesWithDepartName2();
+    }
+
+    // 과제 1-3 부서번호와 직위를 기준으로 해당 부서에 근무하는 특정 직위의 사원 정보를 조회하는 API
+    @GetMapping("/employees/{departmentNumber}/{position}")
+    public List<Employee> getEmployeesWithDepartmentAndPosition(
+            @PathVariable String departmentNumber,
+            @PathVariable String position
+    ) {
+        return employeeService.getEmployeesWithDepartmentAndPosition(
+                departmentNumber, position);
     }
 }
 

@@ -17,4 +17,12 @@ public class OrderService {
     public List<Order> getAllOrders() {
         return orderRepository.getAllOrders();
     }
+
+    public Order getOrderById(String orderNumber) {
+        return orderRepository.getOrderById(orderNumber);
+    }
+
+    public List<Order> getOrderByIdAndCustomer(int productNumber, String customerId) {
+        return orderRepository.getOrderByIdAndCustomer(productNumber, customerId);
+    }
 }

@@ -47,6 +47,13 @@ public class EmployeeService {
         }
         return employeeDepartmentDTOList;
     }
+
+    public List<Employee> getEmployeesWithDepartmentAndPosition(
+            String departmentNumber, String position
+    ) {
+        return employeeRepository.getEmployeesWithDepartmentAndPosition(
+                departmentNumber, position);
+    }
 }
 
 

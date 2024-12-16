@@ -1,8 +1,6 @@
 package com.dw.jdbcapp.service;
 
-import com.dw.jdbcapp.model.Department;
 import com.dw.jdbcapp.model.Product;
-import com.dw.jdbcapp.repository.DepartmentRepository;
 import com.dw.jdbcapp.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +14,9 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
         return productRepository.getAllProducts();
+    }
+
+    public Product getProductById(int productNumber) {
+        return productRepository.getProductById(productNumber);
     }
 }

@@ -107,6 +107,45 @@ public class EmployeeRepository {
         }
         return employees;
     }
+
+    public List<Employee> getEmployeesWithDepartmentAndPosition(
+            String departmentNumber, String position
+    ) {
+        List<Employee> employees = new ArrayList<>();
+        String query = "select * from 사원 where 부서번호 = ? and 직위 = ?";
+        try (
+                Connection connection = DriverManager.getConnection(
+                        URL, USER, PASSWORD);
+                PreparedStatement pstmt = connection.prepareStatement(query)) {
+            System.out.println("데이터베이스 연결 성공");
+            pstmt.setString(1, departmentNumber);
+            pstmt.setString(2, position);
+            try(ResultSet resultSet = pstmt.executeQuery()) {
+                while (resultSet.next()) {
+                    Employee employee = new Employee();
+
+                    employee.setEmployeeId(resultSet.getString("사원번호"));
+                    employee.setName(resultSet.getString("이름"));
+                    employee.setEnglishName(resultSet.getString("영문이름"));
+                    employee.setPosition(resultSet.getString("직위"));
+                    employee.setGender(resultSet.getString("성별"));
+                    employee.setBirthDate(LocalDate.parse(resultSet.getString("생일")));
+                    employee.setHireDate(LocalDate.parse(resultSet.getString("입사일")));
+                    employee.setAddress(resultSet.getString("주소"));
+                    employee.setCity(resultSet.getString("도시"));
+                    employee.setRegion(resultSet.getString("지역"));
+                    employee.setHomePhone(resultSet.getString("집전화"));
+                    employee.setSupervisorId(resultSet.getString("상사번호"));
+                    employee.setDepartmentId(resultSet.getString("부서번호"));
+
+                    employees.add(employee);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
 }
 
 

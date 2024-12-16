@@ -43,7 +43,6 @@ public class EmployeeController {
     public List<EmployeeDepartmentDTO> getEmployeesWithDepartName2() {
         return employeeService.getEmployeesWithDepartName2();
     }
-
 }
 
 

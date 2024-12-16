@@ -15,4 +15,28 @@ public class DepartmentService {
     public List<Department> getAllDepartments() {
         return departmentRepository.getAllDepartments();
     }
+
+    public Department saveDepartment(Department department) {
+        return departmentRepository.saveDepartment(department);
+    }
+
+    public List<Department> saveDepartmentList(
+                           List<Department> departmentList) {
+        for (Department data : departmentList) {
+            departmentRepository.saveDepartment(data);
+        }
+        return departmentList;
+    }
+
+    public Department updateDepartment(Department department) {
+        return departmentRepository.updateDepartment(department);
+    }
 }
+
+
+
+
+
+
+
+

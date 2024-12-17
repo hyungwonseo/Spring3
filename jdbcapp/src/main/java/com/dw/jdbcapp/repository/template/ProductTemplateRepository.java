@@ -58,11 +58,21 @@ public class ProductTemplateRepository implements ProductRepository {
 
     @Override
     public Product updateProduct(Product product) {
-        return null;
+        String query = "update 제품 set 제품명=?, 포장단위=?, 단가=?, " +
+                "재고=? where 제품번호=?";
+        jdbcTemplate.update(query,
+                product.getProductName(),
+                product.getPackageUnit(),
+                product.getUnitPrice(),
+                product.getStock(),
+                product.getProductId());
+        return product;
     }
 
     @Override
     public int deleteProduct(int id) {
-        return 0;
+        String query = "delete from 제품 where 제품번호=?";
+        jdbcTemplate.update(query, id);
+        return id;
     }
 }

@@ -13,6 +13,21 @@
 : 단일 값을 반환 (int 라던지 String 등 단일 데이터타입)
 : 스칼라 서브쿼리(단일 값을 리턴하는 서브쿼리)를 사용할때 주로  사용함
 
+<JdbcTemplate의 update 메서드>
+1. update(String query, 매개변수1, 매개변수2, ....)
+: insert, update, delete 을 수행할 때 사용
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -45,7 +45,15 @@ public class ProductTemplateRepository implements ProductRepository {
 
     @Override
     public Product saveProduct(Product product) {
-        return null;
+        String query = "insert into 제품(제품번호,제품명,포장단위,단가,재고)" +
+                " values(?,?,?,?,?)";
+        jdbcTemplate.update(query,
+                product.getProductId(),
+                product.getProductName(),
+                product.getPackageUnit(),
+                product.getUnitPrice(),
+                product.getStock());
+        return product;
     }
 
     @Override

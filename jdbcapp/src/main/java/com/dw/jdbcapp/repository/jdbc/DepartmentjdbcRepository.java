@@ -1,6 +1,7 @@
 package com.dw.jdbcapp.repository.jdbc;
 
 import com.dw.jdbcapp.model.Department;
+import com.dw.jdbcapp.repository.iface.DepartmentRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -8,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class DepartmentjdbcRepository {
+public class DepartmentjdbcRepository implements DepartmentRepository {
     private static final String URL = "jdbc:mysql://localhost:3306/testdb";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
+    @Override
     public List<Department> getAllDepartments() {
         List<Department> departments = new ArrayList<>();
         String query = "select * from 부서";
@@ -36,6 +38,7 @@ public class DepartmentjdbcRepository {
         return departments;
     }
 
+    @Override
     public Department saveDepartment(Department department) {
         // 매개변수로 전달받은 department 객체 정보를 MySQL에 insert한 후
         // 성공이면 해당 객체를 리턴함
@@ -53,6 +56,7 @@ public class DepartmentjdbcRepository {
         return department;
     }
 
+    @Override
     public Department updateDepartment(Department department) {
         String query = "update 부서 set 부서명=? where 부서번호=?";
         try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
@@ -67,6 +71,7 @@ public class DepartmentjdbcRepository {
         return department;
     }
 
+    @Override
     public String deleteDepartment(String id) {
         String query = "delete from 부서 where 부서번호 = ?";
         try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);

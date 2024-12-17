@@ -16,7 +16,7 @@ public class DepartmentTemplateRepository implements DepartmentRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    RowMapper<Department> departmentRowMapper = new RowMapper<Department>() {
+    private final RowMapper<Department> departmentRowMapper = new RowMapper<Department>() {
         @Override
         public Department mapRow(ResultSet rs, int rowNum) throws SQLException {
             Department department = new Department();

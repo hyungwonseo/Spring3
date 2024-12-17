@@ -19,21 +19,21 @@ public class EmployeeTemplateRepository implements EmployeeRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private final RowMapper<Employee> employeeRowMapper = (resultSet, rowNum) -> {
+    private final RowMapper<Employee> employeeRowMapper = (rs, rowNum) -> {
         Employee employee = new Employee();
-        employee.setEmployeeId(resultSet.getString("사원번호"));
-        employee.setName(resultSet.getString("이름"));
-        employee.setEnglishName(resultSet.getString("영문이름"));
-        employee.setPosition(resultSet.getString("직위"));
-        employee.setGender(resultSet.getString("성별"));
-        employee.setBirthDate(LocalDate.parse(resultSet.getString("생일")));
-        employee.setHireDate(LocalDate.parse(resultSet.getString("입사일")));
-        employee.setAddress(resultSet.getString("주소"));
-        employee.setCity(resultSet.getString("도시"));
-        employee.setRegion(resultSet.getString("지역"));
-        employee.setHomePhone(resultSet.getString("집전화"));
-        employee.setSupervisorId(resultSet.getString("상사번호"));
-        employee.setDepartmentId(resultSet.getString("부서번호"));
+        employee.setEmployeeId(rs.getString("사원번호"));
+        employee.setName(rs.getString("이름"));
+        employee.setEnglishName(rs.getString("영문이름"));
+        employee.setPosition(rs.getString("직위"));
+        employee.setGender(rs.getString("성별"));
+        employee.setBirthDate(LocalDate.parse(rs.getString("생일")));
+        employee.setHireDate(LocalDate.parse(rs.getString("입사일")));
+        employee.setAddress(rs.getString("주소"));
+        employee.setCity(rs.getString("도시"));
+        employee.setRegion(rs.getString("지역"));
+        employee.setHomePhone(rs.getString("집전화"));
+        employee.setSupervisorId(rs.getString("상사번호"));
+        employee.setDepartmentId(rs.getString("부서번호"));
         return employee;
     };
 

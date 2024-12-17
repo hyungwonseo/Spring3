@@ -35,6 +35,7 @@ public class CustomerTemplateRepository implements CustomerRepository {
 
     @Override
     public List<Customer> getAllCustomers() {
-
+        String query = "select * from 고객";
+        return jdbcTemplate.query(query, customerRowMapper);
     }
 }

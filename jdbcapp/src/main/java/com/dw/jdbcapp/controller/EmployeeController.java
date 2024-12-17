@@ -52,6 +52,12 @@ public class EmployeeController {
         return employeeService.getEmployeesWithDepartmentAndPosition(
                 departmentNumber, position);
     }
+
+    // 과제 2-3 사원테이블에 사원 1명을 새로 추가하는 API
+    @PostMapping("/post/employee")
+    public Employee saveEmployee(@RequestBody Employee employee) {
+        return employeeService.saveEmployee(employee);
+    }
 }
 
 

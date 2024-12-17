@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("jdbcRepository")
+@Repository
 public class CustomerJdbcRepository implements CustomerRepository {
     private static final String URL = "jdbc:mysql://localhost:3306/testdb";
     private static final String USER = "root";

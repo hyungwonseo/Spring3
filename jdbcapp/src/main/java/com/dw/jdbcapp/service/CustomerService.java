@@ -12,8 +12,7 @@ import java.util.List;
 @Service
 public class CustomerService {
     @Autowired
-    @Qualifier("jdbcTemplateRepository")
-    CustomerRepository customerRepository;
+    CustomerJdbcRepository customerRepository;
 
     public List<Customer> getAllCustomers() {
         return customerRepository.getAllCustomers();

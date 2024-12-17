@@ -1,6 +1,5 @@
-package com.dw.jdbcapp.repository;
+package com.dw.jdbcapp.repository.jdbc;
 
-import com.dw.jdbcapp.model.OrderDetail;
 import com.dw.jdbcapp.model.Product;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ProductRepository {
+public class ProductJdbcRepository {
     private static final String URL = "jdbc:mysql://localhost:3306/testdb";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
@@ -62,5 +61,54 @@ public class ProductRepository {
             e.printStackTrace();
         }
         return product;
+    }
+
+    public Product saveProduct(Product product) {
+        String query = "insert into 제품(제품번호,제품명,포장단위,단가,재고) "
+                + "values (?,?,?,?,?)";
+        try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, product.getProductId());
+            pstmt.setString(2, product.getProductName());
+            pstmt.setString(3, product.getPackageUnit());
+            pstmt.setDouble(4, product.getUnitPrice());
+            pstmt.setInt(5, product.getStock());
+            pstmt.executeUpdate();
+            System.out.println("INSERT 성공");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    public Product updateProduct(Product product) {
+        String query = "update 제품 set 제품명=?, 포장단위=?," +
+                " 단가=?, 재고=? where 제품번호=?";
+        try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, product.getProductName());
+            pstmt.setString(2, product.getPackageUnit());
+            pstmt.setDouble(3, product.getUnitPrice());
+            pstmt.setInt(4, product.getStock());
+            pstmt.setInt(5, product.getProductId());
+            pstmt.executeUpdate();
+            System.out.println("UPDATE 성공");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    public int deleteProduct(int id) {
+        String query = "delete from 제품 where 제품번호 = ?";
+        try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("DELETE 성공");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

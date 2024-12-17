@@ -1,7 +1,6 @@
-package com.dw.jdbcapp.repository;
+package com.dw.jdbcapp.repository.jdbc;
 
 import com.dw.jdbcapp.model.Employee;
-import com.dw.jdbcapp.model.OrderDetail;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class EmployeeRepository {
+public class EmployeejdbcRepository {
     private static final String URL = "jdbc:mysql://localhost:3306/testdb";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
@@ -145,6 +144,33 @@ public class EmployeeRepository {
             e.printStackTrace();
         }
         return employees;
+    }
+
+    public Employee saveEmployee(Employee employee) {
+        String query = "insert into 사원(사원번호,이름,영문이름,직위,성별," +
+                "생일,입사일,주소,도시,지역,집전화,상사번호,부서번호) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        try(Connection conn = DriverManager.getConnection(URL,USER,PASSWORD);
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, employee.getEmployeeId());
+            pstmt.setString(2, employee.getName());
+            pstmt.setString(3, employee.getEnglishName());
+            pstmt.setString(4, employee.getPosition());
+            pstmt.setString(5, employee.getGender());
+            pstmt.setString(6, employee.getBirthDate().toString());
+            pstmt.setString(7, employee.getHireDate().toString());
+            pstmt.setString(8, employee.getAddress());
+            pstmt.setString(9, employee.getCity());
+            pstmt.setString(10, employee.getRegion());
+            pstmt.setString(11, employee.getHomePhone());
+            pstmt.setString(12, employee.getSupervisorId());
+            pstmt.setString(13, employee.getDepartmentId());
+            pstmt.executeUpdate();
+            System.out.println("INSERT 성공");
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employee;
     }
 }
 

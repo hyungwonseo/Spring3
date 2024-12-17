@@ -12,7 +12,8 @@ import java.util.List;
 @Service
 public class CustomerService {
     @Autowired
-    CustomerJdbcRepository customerRepository;
+    @Qualifier("customerTemplateRepository")
+    CustomerRepository customerRepository;
 
     public List<Customer> getAllCustomers() {
         return customerRepository.getAllCustomers();

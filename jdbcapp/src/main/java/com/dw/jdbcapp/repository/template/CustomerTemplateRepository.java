@@ -5,11 +5,13 @@ import com.dw.jdbcapp.repository.iface.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 public class CustomerTemplateRepository implements CustomerRepository {
     // JDBC Template은 반드시 JdbcTemplate 객체를 의존성 주입받아 사용해야 함
     @Autowired

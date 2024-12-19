@@ -3,6 +3,8 @@ package com.dw.jdbcapp.controller;
 import com.dw.jdbcapp.model.Customer;
 import com.dw.jdbcapp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +18,14 @@ public class CustomerController {
     CustomerService customerService;
 
     @GetMapping("/find-all-customers")
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return new ResponseEntity<>(
+                customerService.getAllCustomers(), // 첫번째 매개변수는 데이터
+                HttpStatus.OK);
     }
 }
+
+
+
+
+

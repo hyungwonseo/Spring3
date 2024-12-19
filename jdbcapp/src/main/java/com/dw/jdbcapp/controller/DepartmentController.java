@@ -18,8 +18,10 @@ public class DepartmentController {
     DepartmentService departmentService;
 
     @GetMapping("/find-all-departments")
-    public List<Department> getAllDepartments() {
-        return departmentService.getAllDepartments();
+    public ResponseEntity<List<Department>> getAllDepartments() {
+        return new ResponseEntity<>(
+                departmentService.getAllDepartments(),
+                HttpStatus.OK);
     }
 
     // single data (저장할 데이터 객체 1개 처리용)
@@ -32,20 +34,26 @@ public class DepartmentController {
 
     // multiple data (저장할 데이터가 리스트임)
     @PostMapping("/post/departmentlist")
-    public List<Department> saveDepartmentList(
+    public ResponseEntity<List<Department>> saveDepartmentList(
             @RequestBody List<Department> departmentList) {
-        return departmentService.saveDepartmentList(departmentList);
+        return new ResponseEntity<>(
+                departmentService.saveDepartmentList(departmentList),
+                HttpStatus.CREATED);
     }
 
     @PutMapping("/put/department")
-    public Department updateDepartment(@RequestBody Department department) {
-        return departmentService.updateDepartment(department);
+    public ResponseEntity<Department> updateDepartment(@RequestBody Department department) {
+        return new ResponseEntity<>(
+                departmentService.updateDepartment(department),
+                HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/department/id/{id}")
-    public String deleteDepartment(@PathVariable String id) {
-        return "부서번호 : " + departmentService.deleteDepartment(id)
-                + " 가 삭제되었습니다.";
+    public ResponseEntity<String> deleteDepartment(@PathVariable String id) {
+        return new ResponseEntity<>(
+                "부서번호 : " + departmentService.deleteDepartment(id)
+                + " 가 삭제되었습니다.",
+                HttpStatus.OK);
     }
 }
 

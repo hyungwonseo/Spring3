@@ -2,6 +2,8 @@ package com.dw.jdbcapp.exception;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,7 +17,11 @@ public class CustomExceptionHandler {
     @ExceptionHandler(InvalidRequestException.class)
     // ()안에 선언한 예외클래스를 핸들링하는 메서드라는 의미
     // 자바에서는 클래스이름만 필요한 경우에는 반드시 클래스명.class를 사용해야함
-    
+    public ResponseEntity<String> handleInvalidRequestException(
+            InvalidRequestException e) {
+        return new ResponseEntity<>(
+                e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
 
 

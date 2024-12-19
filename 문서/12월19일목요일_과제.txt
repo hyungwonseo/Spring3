@@ -16,7 +16,7 @@
 1) 제품을 조회할 때 단가를 매개변수로 전달하고 해당 단가보다 싼 제품을 조회하는 API
 GET /api/product?price_below=1000
 ==> 새로운 repository 메서드는 ProductRepository에 추상메서드로 선언하고 JDBC와 JDBCTemplate 각 구현체에 모두 오버라이드하세요
-메서드명 : getProductsBelowPrice(double price)
+메서드명 : getProductsBelowPrice(double price_below)
 
 2) 해당 단가보다 싼 제품이 없을 경우, "해당되는 제품이 없습니다"를 출력하는 예외처리
 예) /api/product?price_below=600

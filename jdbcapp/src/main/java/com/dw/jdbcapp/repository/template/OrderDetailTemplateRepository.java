@@ -30,4 +30,16 @@ public class OrderDetailTemplateRepository implements OrderDetailRepository {
         String query = "select * from 주문세부";
         return jdbcTemplate.query(query, orderDetailRowMapper);
     }
+
+    @Override
+    public int saveOrderDetail(OrderDetail orderDetail) {
+        String query = "insert into 주문세부(주문번호,제품번호,단가,주문수량,할인율) " +
+                "values(?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(query,
+                orderDetail.getOrderId(),
+                orderDetail.getProductId(),
+                orderDetail.getUnitPrice(),
+                orderDetail.getOrderQuantity(),
+                orderDetail.getDiscountRate());
+    }
 }

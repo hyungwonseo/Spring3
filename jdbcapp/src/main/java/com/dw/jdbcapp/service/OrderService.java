@@ -1,7 +1,10 @@
 package com.dw.jdbcapp.service;
 
+import com.dw.jdbcapp.dto.OrderRequestDTO;
 import com.dw.jdbcapp.exception.ResourceNotFoundException;
 import com.dw.jdbcapp.model.Order;
+import com.dw.jdbcapp.model.OrderDetail;
+import com.dw.jdbcapp.repository.iface.OrderDetailRepository;
 import com.dw.jdbcapp.repository.iface.OrderRepository;
 import com.dw.jdbcapp.repository.jdbc.OrderJdbcRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,9 @@ public class OrderService {
     @Autowired
     @Qualifier("orderTemplateRepository")
     OrderRepository orderRepository;
+    @Autowired
+    @Qualifier("orderDetailTemplateRepository")
+    OrderDetailRepository orderDetailRepository;
 
     public List<Order> getAllOrders() {
         return orderRepository.getAllOrders();
@@ -33,5 +39,13 @@ public class OrderService {
                             + customerId);
         }
         return orders;
+    }
+
+    public OrderRequestDTO saveOrder(OrderRequestDTO orderRequestDTO) {
+        orderRepository.saveOrder(orderRequestDTO.toOrder());
+        for (OrderDetail data : orderRequestDTO.getOrderDetails()) {
+            orderDetailRepository.saveOrderDetail(data);
+        }
+        return orderRequestDTO;
     }
 }

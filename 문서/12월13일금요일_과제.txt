@@ -1,4 +1,4 @@
-아래 REST API를 구현하세요.
+과제1. 아래 REST API를 구현하세요.
 
 1. 제품번호를 기준으로 제품 정보를 조회하는 API
 GET /api/products/{productNumber}

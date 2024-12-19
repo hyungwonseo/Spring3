@@ -1,4 +1,4 @@
-아래 REST API를 구현하세요.
+과제2. 아래 REST API를 구현하세요.
 
 1. 제품테이블에 새로운 제품 1개를 추가하는 API
 POST /api/post/product/

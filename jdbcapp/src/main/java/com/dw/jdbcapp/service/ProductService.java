@@ -1,6 +1,7 @@
 package com.dw.jdbcapp.service;
 
 import com.dw.jdbcapp.exception.InvalidRequestException;
+import com.dw.jdbcapp.exception.ResourceNotFoundException;
 import com.dw.jdbcapp.model.Product;
 import com.dw.jdbcapp.repository.iface.ProductRepository;
 import com.dw.jdbcapp.repository.jdbc.ProductJdbcRepository;
@@ -45,5 +46,15 @@ public class ProductService {
 
     public int deleteProduct(int id) {
         return productRepository.deleteProduct(id);
+    }
+
+    // 과제 3-5 해당 단가보다 싼 제품이 없을 경우, "해당되는 제품이 없습니다"를 출력하는 예외처리
+    public List<Product> getProductsBelowPrice(double price) {
+        List<Product> products = productRepository.getProductsBelowPrice(price);
+        if (products.isEmpty()) {
+            throw new ResourceNotFoundException("해당되는 제품이 없습니다: " +
+                    price);
+        }
+        return products;
     }
 }

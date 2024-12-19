@@ -85,4 +85,10 @@ public class ProductTemplateRepository implements ProductRepository {
         jdbcTemplate.update(query, id);
         return id;
     }
+
+    @Override
+    public List<Product> getProductsBelowPrice(double price) {
+        String query = "select * from 제품 where 단가 < ?";
+        return jdbcTemplate.query(query, productRowMapper, price);
+    }
 }

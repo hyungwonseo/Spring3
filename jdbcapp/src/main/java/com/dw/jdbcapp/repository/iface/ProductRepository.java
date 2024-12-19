@@ -10,4 +10,5 @@ public interface ProductRepository {
     Product saveProduct(Product product);
     Product updateProduct(Product product);
     int deleteProduct(int id);
+    List<Product> getProductsBelowPrice(double price);
 }

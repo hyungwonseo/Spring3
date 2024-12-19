@@ -65,4 +65,13 @@ public class ProductController {
                         + " 삭제됨",
                 HttpStatus.OK);
     }
+
+    // 과제 3-5 제품을 조회할 때 단가를 매개변수로 전달하고 해당 단가보다 싼 제품을 조회하는 API
+    @GetMapping("/product")
+    public ResponseEntity<List<Product>> getProductsBelowPrice(
+            @RequestParam double price_below) {
+        return new ResponseEntity<>(
+                productService.getProductsBelowPrice(price_below),
+                HttpStatus.OK);
+    }
 }

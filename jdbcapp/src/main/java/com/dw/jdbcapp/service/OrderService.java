@@ -42,7 +42,9 @@ public class OrderService {
     }
 
     public OrderRequestDTO saveOrder(OrderRequestDTO orderRequestDTO) {
+        // 1. DTO에서 주문정보를 꺼내 주문테이블에 insert
         orderRepository.saveOrder(orderRequestDTO.toOrder());
+        // 2. DTO에서 주문세부정보를 꺼내 주문세부테이블에 insert. 반복문필요
         for (OrderDetail data : orderRequestDTO.getOrderDetails()) {
             orderDetailRepository.saveOrderDetail(data);
         }

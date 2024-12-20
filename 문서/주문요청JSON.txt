@@ -1,0 +1,22 @@
+{
+    "orderId": "H1080",
+    "customerId": "ACDDR",
+    "employeeId": "E03",
+    "requestDate": "2024-12-22",
+    "orderDetails": [
+        {
+            "orderId": "H1080",
+            "productId": 2,
+            "unitPrice": 1900,
+            "orderQuantity": 10,
+            "discountRate": 0
+        },
+        {
+            "orderId": "H1080",
+            "productId": 3,
+            "unitPrice": 1000,
+            "orderQuantity": 10,
+            "discountRate": 0
+        }
+    ]   
+}

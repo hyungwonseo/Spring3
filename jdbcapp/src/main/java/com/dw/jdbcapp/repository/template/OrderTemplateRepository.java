@@ -60,7 +60,7 @@ public class OrderTemplateRepository implements OrderRepository {
     @Override
     public int saveOrder(Order order) {
         String query = "insert into 주문(주문번호,고객번호,사원번호,주문일,요청일) " +
-            "values(?, ?, ?, ?, ?)";
+                "values(?, ?, ?, ?, ?)";
         return jdbcTemplate.update(query,
                 order.getOrderId(),
                 order.getCustomerId(),

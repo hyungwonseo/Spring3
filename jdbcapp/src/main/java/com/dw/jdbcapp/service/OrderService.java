@@ -50,6 +50,10 @@ public class OrderService {
         return orders;
     }
 
+    // @Transactional은 선언된 메서드 수행도중 예외가 발생하면 이미 수행되었던
+    // 동작을 모두 롤백(rollback=원상복귀)시키도록 명령하는 어노테이션임
+    // 주문세부의 특정 제품의 재고가 부족해서 예외가 발생하면 전체 주문,주문세부의
+    // 저장되었던 내용들은 모두 취소되고 롤백됨!!
     @Transactional
     public OrderRequestDTO saveOrder(OrderRequestDTO orderRequestDTO) {
         // 1. DTO에서 주문정보를 꺼내 주문테이블에 insert

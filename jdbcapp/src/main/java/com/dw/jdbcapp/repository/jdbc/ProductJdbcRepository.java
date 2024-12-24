@@ -1,5 +1,6 @@
 package com.dw.jdbcapp.repository.jdbc;
 
+import com.dw.jdbcapp.dto.ProductDTO;
 import com.dw.jdbcapp.model.Product;
 import com.dw.jdbcapp.repository.iface.ProductRepository;
 import org.springframework.stereotype.Repository;
@@ -143,5 +144,15 @@ public class ProductJdbcRepository implements ProductRepository {
             e.printStackTrace();
         }
         return products;
+    }
+
+    @Override
+    public int updateProductWithStock(int id, int stock) {
+        return 0;
+    }
+
+    @Override
+    public List<Product> getProductByProductName(String name) {
+        return List.of();
     }
 }

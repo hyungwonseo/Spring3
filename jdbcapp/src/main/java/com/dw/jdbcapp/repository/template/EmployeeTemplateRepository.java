@@ -107,4 +107,19 @@ public class EmployeeTemplateRepository implements EmployeeRepository {
                 employee.getDepartmentId());
         return employee;
     }
+
+    // 과제 4-3 입사일을 매개변수로 해당 입사일 이후로 입사한 사원들을 조회하는 API
+    // hiredate를 0으로 입력하면 가장 최근 입사한 사원의 정보를 조회하시오.
+    @Override
+    public List<Employee> getEmployeesByHiredate(String hiredate) {
+        String query = "select * from 사원 where 입사일 >= ?";
+        return jdbcTemplate.query(query, employeeRowMapper, hiredate);
+    }
+
+    @Override
+    public List<Employee> getLastHiredEmployees() {
+        String query = "select * from 사원 where 입사일 = " +
+                "(select 입사일 from 사원 order by 입사일 desc limit 1)";
+        return jdbcTemplate.query(query, employeeRowMapper);
+    }
 }

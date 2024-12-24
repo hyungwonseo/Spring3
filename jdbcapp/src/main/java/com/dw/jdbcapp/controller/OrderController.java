@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -49,5 +50,32 @@ public class OrderController {
         return new ResponseEntity<>(
                 orderService.saveOrder(orderRequestDTO),
                 HttpStatus.CREATED);
+    }
+
+    // 과제 4-4 주문번호와 발송일을 매개변수로 해당 주문의 발송일을 수정하는 API
+    @PutMapping("/orders/update")
+    public ResponseEntity<String> updateOrderWithShippingDate(
+            @RequestParam String id, @RequestParam String date) {
+        return new ResponseEntity<>(
+                orderService.updateOrderWithShippingDate(id, date),
+                HttpStatus.OK);
+    }
+
+    // 과제 4-5 도시별로 주문금액합 결과를 내림차순 정렬하여 조회하는 API
+    @GetMapping("/orders/city/orderamount/{limit}")
+    public ResponseEntity<List<Map<String, Double>>>
+        getTopCitiesByTotalOrderAmount(@PathVariable int limit) {
+        return new ResponseEntity<>(
+                orderService.getTopCitiesByTotalOrderAmount(limit),
+                HttpStatus.OK);
+    }
+
+    // 과제 4-6 도시를 매개변수로 해당 도시의 년도별 주문건수를 조회하는 API
+    @GetMapping("/orders/ordercount/year/{city}")
+    public ResponseEntity<List<Map<String, Double>>>
+        getOrderCountByYearForCity(@PathVariable String city) {
+        return new ResponseEntity<>(
+                orderService.getOrderCountByYearForCity(city),
+                HttpStatus.OK);
     }
 }

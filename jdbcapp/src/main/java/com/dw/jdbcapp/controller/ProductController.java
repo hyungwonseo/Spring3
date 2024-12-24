@@ -1,5 +1,6 @@
 package com.dw.jdbcapp.controller;
 
+import com.dw.jdbcapp.dto.ProductDTO;
 import com.dw.jdbcapp.model.Customer;
 import com.dw.jdbcapp.model.Product;
 import com.dw.jdbcapp.service.CustomerService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -72,6 +74,32 @@ public class ProductController {
             @RequestParam double price_below) {
         return new ResponseEntity<>(
                 productService.getProductsBelowPrice(price_below),
+                HttpStatus.OK);
+    }
+
+    // 과제 4-8 제품번호와 재고를 매개변수로 해당 제품의 재고를 수정하는 API
+    @PutMapping("/products/update")
+    public ResponseEntity<String> updateProductWithStock(
+            @RequestParam int id, @RequestParam int stock) {
+        return new ResponseEntity<>(
+                productService.updateProductWithStock(id, stock),
+                HttpStatus.OK);
+    }
+
+    // 과제 4-9 제품명의 일부를 매개변수로 해당 문자열을 포함하는 제품들을 조회하는 API
+    @GetMapping("/products/name/{name}")
+    public ResponseEntity<List<Product>> getProductByProductName(
+            @PathVariable String name) {
+        return new ResponseEntity<>(
+                productService.getProductByProductName(name),
+                HttpStatus.OK);
+    }
+
+    // 과제 4-10 ProductDTO를 아래 형식으로 추가하고 조회하는 API
+    @GetMapping("/products/stockvalue")
+    public ResponseEntity<List<ProductDTO>> getProductsByStockValue() {
+        return new ResponseEntity<>(
+                productService.getProductsByStockValue(),
                 HttpStatus.OK);
     }
 }

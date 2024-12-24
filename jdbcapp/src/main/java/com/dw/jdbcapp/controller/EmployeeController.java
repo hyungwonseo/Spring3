@@ -74,6 +74,16 @@ public class EmployeeController {
                 employeeService.saveEmployee(employee),
                 HttpStatus.CREATED);
     }
+
+    // 과제 4-3 입사일을 매개변수로 해당 입사일 이후로 입사한 사원들을 조회하는 API
+    // hiredate를 0으로 입력하면 가장 최근 입사한 사원의 정보를 조회하시오.
+    @GetMapping("/employees/hiredate/{hiredate}")
+    public ResponseEntity<List<Employee>>  getEmployeesByHiredate(
+            @PathVariable String hiredate) {
+        return new ResponseEntity<>(
+                employeeService.getEmployeesByHiredate(hiredate),
+                HttpStatus.OK);
+    }
 }
 
 

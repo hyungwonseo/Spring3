@@ -1,5 +1,6 @@
 package com.dw.jpaapp.model;
 
+import com.dw.jpaapp.dto.CourseDTO;
 import jakarta.persistence.*;
 import jdk.dynalink.linker.LinkerServices;
 import lombok.AllArgsConstructor;
@@ -37,4 +38,25 @@ public class Course {
         joinColumns = @JoinColumn(name = "course_id"),
         inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> studentList = new ArrayList<>();
+
+    // CourseDTO 매핑 메서드
+    public CourseDTO toDTO() {
+        CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setId(this.id);
+        courseDTO.setTitle(this.title);
+        courseDTO.setDescription(this.description);
+        courseDTO.setInstructorId(this.instructor_fk.getId());
+        List<Long> studentIds = new ArrayList<>();
+        for (Student data : studentList) {
+            studentIds.add(data.getId());
+        }
+        courseDTO.setStudentIds(studentIds);
+        return courseDTO;
+    }
 }
+
+
+
+
+
+

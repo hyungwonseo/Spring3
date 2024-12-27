@@ -41,17 +41,10 @@ public class Course {
 
     // CourseDTO 매핑 메서드
     public CourseDTO toDTO() {
-        CourseDTO courseDTO = new CourseDTO();
-        courseDTO.setId(this.id);
-        courseDTO.setTitle(this.title);
-        courseDTO.setDescription(this.description);
-        courseDTO.setInstructorId(this.instructor_fk.getId());
-        List<Long> studentIds = new ArrayList<>();
-        for (Student data : studentList) {
-            studentIds.add(data.getId());
-        }
-        courseDTO.setStudentIds(studentIds);
-        return courseDTO;
+        List<Long> studentIds = studentList.stream()
+                .map(Student::getId).toList();
+        return new CourseDTO(this.id, this.title, this.description,
+                this.instructor_fk.getId(), studentIds);
     }
 }
 

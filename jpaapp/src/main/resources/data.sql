@@ -1,7 +1,7 @@
 INSERT INTO instructor (id, name, career) VALUES
-            (1, 'John Doe', 'Experienced Instructor');
+    (1, 'John Doe', 'Experienced Instructor');
 INSERT INTO instructor (id, name, career) VALUES
-            (2, '홍길동', '초보강사');
+    (2, '홍길동', '초보강사');
 
 INSERT INTO course (id, title, description, instructor_id)
 VALUES (1, 'Java Programming', 'Learn the basics of Java', 1);

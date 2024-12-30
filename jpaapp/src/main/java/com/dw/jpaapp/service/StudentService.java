@@ -60,6 +60,13 @@ public class StudentService {
                 courseList.add(course);
             }
         }
+        /* 함수형 프로그래밍 */
+//        List<Course> courseList = studentDTO.getCourseIds().stream()
+//                .map(id->courseRepository.findById(id))
+//                .filter(Optional::isPresent)
+//                .map(Optional::get)
+//                .peek(c-> c.getStudentList().add(student)) // peek은 스트림으로 받은 자료형을 그대로 유지하면서 코드를 수행하므로 리턴이 필요없음
+//                .toList();
         student.setCourseList(courseList);
         return studentRepository.save(student).toDTO();
     }

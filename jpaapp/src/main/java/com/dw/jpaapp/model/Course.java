@@ -3,10 +3,7 @@ package com.dw.jpaapp.model;
 import com.dw.jpaapp.dto.CourseDTO;
 import jakarta.persistence.*;
 import jdk.dynalink.linker.LinkerServices;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "course")
 public class Course {

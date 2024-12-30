@@ -23,4 +23,19 @@ public class StudentController {
                 studentService.getAllStudents(),
                 HttpStatus.OK);
     }
+
+    @GetMapping("/info")
+    public ResponseEntity<String> getStudentInfo() {
+        return new ResponseEntity<>(
+                studentService.getStudentInfo(),
+                HttpStatus.OK);
+    }
 }
+
+
+
+
+
+
+
+

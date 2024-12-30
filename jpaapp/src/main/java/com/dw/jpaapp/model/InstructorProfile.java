@@ -3,15 +3,13 @@ package com.dw.jpaapp.model;
 import com.dw.jpaapp.dto.InstructorProfileDTO;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "instructor_profile")
 public class InstructorProfile {
@@ -31,7 +29,10 @@ public class InstructorProfile {
 
     // InstructorProfile 매핑 메서드
     public InstructorProfileDTO toDTO() {
-        return new InstructorProfileDTO(this.id, this.bio,
-                this.githubUrl, this.instructor.getId());
+        return new InstructorProfileDTO(
+                this.id,
+                this.bio,
+                this.githubUrl,
+                this.instructor.getId());
     }
 }

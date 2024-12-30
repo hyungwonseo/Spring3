@@ -2,10 +2,7 @@ package com.dw.jpaapp.model;
 
 import com.dw.jpaapp.dto.StudentDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "student") // 명시적으로 테이블이름 설정
 public class Student {

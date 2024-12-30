@@ -17,4 +17,17 @@ public class StudentService {
         return studentRepository.findAll().stream().map(Student::toDTO)
                 .toList();
     }
+
+    public String getStudentInfo() {
+        return studentRepository.findByName("Steve").toString();
+    }
 }
+
+
+
+
+
+
+
+
+

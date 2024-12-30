@@ -1,0 +1,15 @@
+과제5. JPA를 이용한 rest API 만들기 예제
+Course
+1. 검색어를 매개변수로 전달하고 검색어를 포함한 title을 가진 과목을 조회
+GET: /api/course/search?title=검색어
+예) /api/course/search?title=Java
+List<CoureDTO> getCoursesLike(String title)
+
+2. 과목 정보를 새로 저장
+POST: /api/course/save
+예) { "title": "Spring Boot 기본", 
+       "description": "스프링부트 기본 학습",
+       "instructorId": 1, 
+       "studentIds" [1, 2, 3]
+     }
+CourseDTO saveCourse()

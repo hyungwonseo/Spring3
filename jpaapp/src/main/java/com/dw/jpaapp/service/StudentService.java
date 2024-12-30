@@ -59,7 +59,9 @@ public class StudentService {
         for (Long id : studentDTO.getCourseIds()) {
             Optional<Course> courseOptional = courseRepository.findById(id);
             if (courseOptional.isPresent()) {
-                courseList.add(courseOptional.get());
+                Course course = courseOptional.get();
+                course.getStudentList().add(student);
+                courseList.add(course);
             }
         }
         student.setCourseList(courseList);

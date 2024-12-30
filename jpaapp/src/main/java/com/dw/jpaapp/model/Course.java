@@ -2,7 +2,6 @@ package com.dw.jpaapp.model;
 
 import com.dw.jpaapp.dto.CourseDTO;
 import jakarta.persistence.*;
-import jdk.dynalink.linker.LinkerServices;
 import lombok.*;
 
 import java.util.ArrayList;

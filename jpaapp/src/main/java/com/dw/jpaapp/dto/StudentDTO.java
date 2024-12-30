@@ -1,6 +1,5 @@
 package com.dw.jpaapp.dto;
 
-import com.dw.jpaapp.model.Course;
 import lombok.*;
 
 import java.util.ArrayList;

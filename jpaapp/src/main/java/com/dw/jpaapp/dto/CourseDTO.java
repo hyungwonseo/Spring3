@@ -1,8 +1,5 @@
 package com.dw.jpaapp.dto;
 
-import com.dw.jpaapp.model.Instructor;
-import com.dw.jpaapp.model.Student;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;

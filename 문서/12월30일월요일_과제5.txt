@@ -46,6 +46,14 @@ JSON 출력:
     ]
 ]
 
+6. 전체 학생의 학생ID, 학생이름, 강의명, 강사이름을 DTO로 만들어서 조회
+GET: /api/student/summary
+예) /api/student/summary
+StudentSummaryDTO
+	Long 학생ID
+	String 학생이름
+	String 강의명
+	String 강사이름
 
 
 

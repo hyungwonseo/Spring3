@@ -27,3 +27,4 @@ POST: /api/instructor/save
        "courseIds": [2]
      }
 InstructorDTO saveInstructor(InstructorDTO, instructorDTO)
+

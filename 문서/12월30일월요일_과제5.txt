@@ -28,8 +28,28 @@ POST: /api/instructor/save
      }
 InstructorDTO saveInstructor(InstructorDTO instructorDTO)
 
-5. 강사ID, 강사이름, github url을 조회
-GET: /api/instructor/github/{id}
-예) /api/instructor/github/1
-List<Map<String, String>> getInstructorGithub(Long id)
+5. 전체 강사의 강사ID, 강사이름, github url을 조회
+GET: /api/instructor/github
+예) /api/instructor/github
+List<Object[]> getInstructorGithub()
+JSON 출력:
+[
+    [
+        1,
+        "John Doe",
+        "www.github.com/johndoe"
+    ],
+    [
+        2,
+        "홍길동",
+        "www.github.com/honggildong"
+    ]
+]
+
+
+
+
+
+
+
 

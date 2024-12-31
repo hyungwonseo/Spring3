@@ -26,7 +26,7 @@ POST: /api/instructor/save
        "career": "인공지능 머신러닝 연구원",
        "courseIds": [2]
      }
-InstructorDTO saveInstructor(InstructorDTO, instructorDTO)
+InstructorDTO saveInstructor(InstructorDTO instructorDTO)
 
 5. 강사ID, 강사이름, gitbug url을 조회
 GET: /api/instructor/github/{id}

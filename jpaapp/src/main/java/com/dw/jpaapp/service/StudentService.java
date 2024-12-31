@@ -58,9 +58,20 @@ public class StudentService {
                 Course course = courseOptional.get();
                 course.getStudentList().add(student);
                 courseList.add(course);
+            }else {
+                throw new RuntimeException("Course not found");
             }
         }
-        /* 함수형 프로그래밍 */
+        /* 함수형 프로그래밍 #1 */
+//        for (Long id : studentDTO.getCourseIds()) {
+//            courseList.add(courseRepository.findById(id)
+//                    .map(course-> {
+//                        course.getStudentList().add(student);
+//                        return course;
+//                    })
+//                    .orElseThrow(()->new RuntimeException("No Course")));
+//        }
+        /* 함수형 프로그래밍 #2 */
 //        List<Course> courseList = studentDTO.getCourseIds().stream()
 //                .map(id->courseRepository.findById(id))
 //                .filter(Optional::isPresent)

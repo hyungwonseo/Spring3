@@ -18,7 +18,7 @@ Instructor
 3. Instructor의 id를 매개변수로 강사의 정보를 조회
 GET: /api/instructor/{id}
 예) /api/instructor/1
-Instructor getInstructor(Long id)
+InstructorDTO getInstructor(Long id)
 
 4. Instructor 정보를 새로 저장
 POST: /api/instructor/save
@@ -27,4 +27,9 @@ POST: /api/instructor/save
        "courseIds": [2]
      }
 InstructorDTO saveInstructor(InstructorDTO, instructorDTO)
+
+5. 강사ID, 강사이름, gitbug url을 조회
+GET: /api/instructor/github/{id}
+예) /api/instructor/github/1
+List<Map<String, String>> getInstructorGithub(Long id)
 

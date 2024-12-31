@@ -41,16 +41,12 @@ public class InstructorService {
         Instructor instructor = new Instructor();
         instructor.setName(instructorDTO.getName());
         instructor.setCareer(instructorDTO.getCareer());
-        List<Course> courseList = new ArrayList<>();
-        for (Long id : instructorDTO.getCourseIds()) {
-            courseList.add(courseRepository.findById(id)
-                    .map(course->{
-                        course.setInstructor_fk(instructor);
-                        return course;
-                    })
-                    .orElseThrow(()->new RuntimeException("없는 강의아이디")));
-        }
-        instructor.setCourseList(courseList);
+        instructor.setCourseList(instructorDTO.getCourseIds().stream()
+                .map(id->courseRepository.findById(id))
+                .map(optional->optional.orElseThrow(()->new RuntimeException("No course")))
+                .peek(course->course.setInstructor_fk(instructor))
+                .toList()
+        );
         return instructorRepository.save(instructor).toDTO();
     }
 

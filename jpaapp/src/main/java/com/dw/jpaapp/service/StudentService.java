@@ -51,34 +51,12 @@ public class StudentService {
         Student student = new Student();
         student.setName(studentDTO.getName());
         student.setEmail(studentDTO.getEmail());
-        List<Course> courseList = new ArrayList<>();
-        for (Long id : studentDTO.getCourseIds()) {
-            Optional<Course> courseOptional = courseRepository.findById(id);
-            if (courseOptional.isPresent()) {
-                Course course = courseOptional.get();
-                course.getStudentList().add(student);
-                courseList.add(course);
-            }else {
-                throw new RuntimeException("Course not found");
-            }
-        }
-        /* 함수형 프로그래밍 #1 */
-//        for (Long id : studentDTO.getCourseIds()) {
-//            courseList.add(courseRepository.findById(id)
-//                    .map(course-> {
-//                        course.getStudentList().add(student);
-//                        return course;
-//                    })
-//                    .orElseThrow(()->new RuntimeException("No Course")));
-//        }
-        /* 함수형 프로그래밍 #2 */
-//        List<Course> courseList = studentDTO.getCourseIds().stream()
-//                .map(id->courseRepository.findById(id))
-//                .filter(Optional::isPresent)
-//                .map(optional -> optional.orElseThrow(() -> new RuntimeException("Course not found")))
-//                .peek(c-> c.getStudentList().add(student)) // peek은 스트림으로 받은 자료형을 그대로 유지하면서 코드를 수행하므로 리턴이 필요없음
-//                .toList();
-        student.setCourseList(courseList);
+        student.setCourseList(studentDTO.getCourseIds().stream()
+                .map(id->courseRepository.findById(id))
+                .map(optional->optional.orElseThrow(()->new RuntimeException("No course")))
+                .peek(course->course.getStudentList().add(student))
+                .toList()
+        );
         return studentRepository.save(student).toDTO();
     }
 }

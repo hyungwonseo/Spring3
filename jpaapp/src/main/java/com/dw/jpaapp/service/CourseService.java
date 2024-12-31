@@ -40,17 +40,13 @@ public class CourseService {
         Course course = new Course();
         course.setTitle(courseDTO.getTitle());
         course.setDescription(courseDTO.getDescription());
-        Instructor instructor = instructorRepository
-                .findById(courseDTO.getInstructorId())
-                .orElseThrow(()->new RuntimeException("No instructor"));
-        course.setInstructor_fk(instructor);
-        List<Student> students = new ArrayList<>();
-        for (Long id : courseDTO.getStudentIds()) {
-            students.add(studentRepository.findById(id)
-                    .orElseThrow(()->new RuntimeException("No student")));
-        }
-        course.setStudentList(students);
-
+        course.setInstructor_fk(instructorRepository.findById(courseDTO.getInstructorId())
+                .orElseThrow(()->new RuntimeException("No instructor")));
+        course.setStudentList(courseDTO.getStudentIds().stream()
+                .map(id->studentRepository.findById(id))
+                .map(optional->optional.orElseThrow(()->new RuntimeException("No Student")))
+                .toList()
+        );
         return courseRepository.save(course).toDTO();
     }
 }

@@ -12,4 +12,18 @@ POST: /api/course/save
        "instructorId": 1, 
        "studentIds": [1, 2, 3]
      }
-CourseDTO saveCourse()
+CourseDTO saveCourse(CourseDTO courseDTO)
+
+Instructor
+3. Instructor의 id를 매개변수로 강사의 정보를 조회
+GET: /api/instructor/{id}
+예) /api/instructor/1
+Instructor getInstructor(Long id)
+
+4. Instructor 정보를 새로 저장
+POST: /api/instructor/save
+예) { "name": "Michael", 
+       "career": "인공지능 머신러닝 연구원",
+       "courseIds": [2]
+     }
+InstructorDTO saveInstructor(InstructorDTO, instructorDTO)

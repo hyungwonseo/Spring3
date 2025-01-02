@@ -1,15 +1,19 @@
 package com.dw.companyapp.service;
 
 import com.dw.companyapp.model.Customer;
+import com.dw.companyapp.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CustomerService {
+    @Autowired
+    CustomerRepository customerRepository;
 
     public List<Customer> getAllCustomers() {
-        return null;
+        return customerRepository.findAll();
     }
 
     // 과제 4-1 전체 평균마일리지보다 큰 마일리지를 가진 고객들을 조회하는 API

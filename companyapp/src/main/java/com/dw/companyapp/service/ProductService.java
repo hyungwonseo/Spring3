@@ -2,15 +2,19 @@ package com.dw.companyapp.service;
 
 import com.dw.companyapp.dto.ProductDTO;
 import com.dw.companyapp.model.Product;
+import com.dw.companyapp.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProductService {
+    @Autowired
+    ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
-        return null;
+        return productRepository.findAll();
     }
 
     // 과제 1-1 제품번호를 기준으로 제품 정보를 조회하는 API

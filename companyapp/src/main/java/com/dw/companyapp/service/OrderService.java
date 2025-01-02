@@ -2,6 +2,8 @@ package com.dw.companyapp.service;
 
 import com.dw.companyapp.dto.OrderRequestDTO;
 import com.dw.companyapp.model.Order;
+import com.dw.companyapp.repository.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +13,11 @@ import java.util.Map;
 @Transactional
 @Service
 public class OrderService {
+    @Autowired
+    OrderRepository orderRepository;
 
     public List<Order> getAllOrders() {
-        return null;
+        return orderRepository.findAll();
     }
 
     // 과제 1-2 주문번호를 기준으로 주문 정보를 조회하는 API

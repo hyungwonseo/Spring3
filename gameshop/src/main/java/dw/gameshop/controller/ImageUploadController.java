@@ -12,7 +12,6 @@ import java.io.IOException;
 
 @RestController
 public class ImageUploadController {
-
     @Autowired
     private ImageFileRepository imageFileRepository;
 

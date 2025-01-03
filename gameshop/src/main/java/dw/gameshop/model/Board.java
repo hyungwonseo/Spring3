@@ -1,10 +1,7 @@
 package dw.gameshop.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +9,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
+@Table(name="board")
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

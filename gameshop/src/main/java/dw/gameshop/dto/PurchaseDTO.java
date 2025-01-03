@@ -2,10 +2,7 @@ package dw.gameshop.dto;
 
 import dw.gameshop.model.Game;
 import dw.gameshop.model.Purchase;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class PurchaseDTO {
     private long id;
     private Game game;

@@ -3,6 +3,7 @@ package dw.gameshop.controller;
 import dw.gameshop.model.Game;
 import dw.gameshop.model.User;
 import dw.gameshop.service.GameShopService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class GameShopController {
+    @Autowired
     GameShopService gameShopService;
-
-    public GameShopController(GameShopService gameShopService) {
-        this.gameShopService = gameShopService;
-    }
 
     @GetMapping("/products")
     public ResponseEntity<List<Game>> getAllGames() {

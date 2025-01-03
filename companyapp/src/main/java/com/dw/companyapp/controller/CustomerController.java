@@ -30,7 +30,7 @@ public class CustomerController {
     public ResponseEntity<List<Customer>> getCustomersWithHighMileThanAvg() {
         return new ResponseEntity<>(
                 customerService.getCustomersWithHighMileThanAvg(),
-                HttpStatus.CREATED);
+                HttpStatus.OK);
     }
 
     // 과제 4-2 마일리지등급을 매개변수로 해당 마일리지등급을 가진 고객들을 조회하는 API

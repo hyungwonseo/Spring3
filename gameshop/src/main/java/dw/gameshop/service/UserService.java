@@ -45,10 +45,13 @@ public class UserService {
         return passwordEncoder.matches(password, user.getPassword());
     }
 
-    public String getCurrentUser(HttpServletRequest request) {
+    public UserDTO getCurrentUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);  // 세션이 없으면 null 반환
         if (session != null) {
-            return (String) session.getAttribute("username");  // 세션에서 유저네임 반환
+            String userName = (String) session.getAttribute("username");  // 세션에서 유저네임 반환
+            return userRepository.findById(userName)
+                    .map(User::toDto)
+                    .orElseThrow(()->new InvalidRequestException("No username"));
         }
         return null;
     }

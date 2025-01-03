@@ -1,6 +1,7 @@
 package dw.gameshop.service;
 
 import dw.gameshop.dto.PurchaseDTO;
+import dw.gameshop.dto.UserDTO;
 import dw.gameshop.exception.ResourceNotFoundException;
 import dw.gameshop.model.Purchase;
 import dw.gameshop.model.User;
@@ -51,8 +52,8 @@ public class PurchaseService {
 
     // 현재 세션 유저 이름으로 구매한 게임 찾기
     public List<PurchaseDTO> getPurchaseListByCurrentUser(HttpServletRequest request) {
-        String userName = userService.getCurrentUser(request);
-        return getPurchaseListByUserName(userName);
+        UserDTO userDTO = userService.getCurrentUser(request);
+        return getPurchaseListByUserName(userDTO.getUserName());
     }
 }
 

@@ -65,14 +65,14 @@ function sessionCurrent(data) {
     .get(urlSession, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
-      if (response.data.resultCode == "SUCCESS") {
-        const userId = response.data.data.userId;
-        let cartItems = JSON.parse(localStorage.getItem(userId));
+      if (response.data != "" && response.data != null) {
+        const userName = response.data.userName;
+        let cartItems = JSON.parse(localStorage.getItem(userName));
         if (!cartItems) {
           cartItems = [];
         }
         cartItems.push(data);
-        localStorage.setItem(userId, JSON.stringify(cartItems));
+        localStorage.setItem(userName, JSON.stringify(cartItems));
       }
     })
     .catch((error) => {

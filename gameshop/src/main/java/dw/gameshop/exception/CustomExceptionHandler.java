@@ -29,4 +29,13 @@ public class CustomExceptionHandler {
                 errors,
                 HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(UnauthorizedUserException.class)
+    protected ResponseEntity<Map<String, String>> handleUnauthorizedUserException(UnauthorizedUserException ex) {
+        Map<String, String> errors = Map.of("Authentication failed",
+                (ex.getMessage() != null ? ex.getMessage() : "No Exception Message"));
+        return new ResponseEntity<>(
+                errors,
+                HttpStatus.UNAUTHORIZED);
+    }
 }

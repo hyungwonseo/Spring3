@@ -19,7 +19,7 @@ public class ImageUploadController {
     public String uploadImage(@RequestParam("file") MultipartFile file) {
         try {
             ImageFile imageFile = new ImageFile();
-            imageFile.setFilename(file.getOriginalFilename());
+            imageFile.setFileName(file.getOriginalFilename());
             imageFile.setData(file.getBytes());
             imageFileRepository.save(imageFile);
             return "File uploaded to DB successfully: " + file.getOriginalFilename();
@@ -29,9 +29,9 @@ public class ImageUploadController {
         }
     }
 
-    @GetMapping("/api/file/{filename}")
-    public ResponseEntity<byte[]> getImage(@PathVariable String filename) throws IOException {
-        ImageFile imageFile = imageFileRepository.findByFilename(filename);
+    @GetMapping("/api/file/{fileName}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String fileName) throws IOException {
+        ImageFile imageFile = imageFileRepository.findByFileName(fileName);
         return new ResponseEntity<>(imageFile.getData(), HttpStatus.OK);
     }
 }

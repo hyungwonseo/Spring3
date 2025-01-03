@@ -8,6 +8,6 @@ import lombok.*;
 @Setter
 @ToString
 public class SessionDTO {
-    private String userId;
+    private String userName;
     private String authority;
 }

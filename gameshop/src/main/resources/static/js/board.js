@@ -1,6 +1,7 @@
-const urlBoard = "/api/board";
+const urlBoard = "/api/board/all";
+const urlSaveBoard = "/api/board";
 const urlDeleteBoard = "/api/board/delete";
-const urlSession = "/api/user/current";
+const urlSession = "/api/user/current-user";
 
 let dataList = [];
 let pageCurrent = 1;
@@ -205,7 +206,7 @@ document.querySelector(".modal-save-btn").addEventListener("click", () => {
     },
   };
   axios
-    .post(urlBoard, data, { withCredentials: true })
+    .post(urlSaveBoard, data, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
       alert("글을 성공적으로 저장하였습니다.");

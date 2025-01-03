@@ -1,5 +1,5 @@
 const url = "/api/products/purchaselist";
-const urlSession = "/api/user/current";
+const urlSession = "/api/user/current-user";
 
 function sessionCurrent() {
   axios

@@ -1,5 +1,6 @@
 package dw.gameshop.model;
 
+import dw.gameshop.enums.GameGenre;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,14 +15,14 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(length = 100)
+    @Column(name = "title")
     private String title;
-    @Column(length = 100)
+    @Column(name = "genre")
     private String genre;
-    @Column
+    @Column(name = "price")
     private int price;
-    @Column(length = 65535)
-    private String image;
-    @Column(length = 65535)
+    @Column(name = "image_url")
+    private String imageUrl;
+    @Column(name = "text", length = 3000)
     private String text;
 }

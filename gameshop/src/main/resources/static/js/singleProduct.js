@@ -2,14 +2,14 @@ const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
 console.log("Game ID: ", id);
 
-const url = "/api/products/" + id;
-const urlSession = "/api/user/current";
+const url = "/api/game/id/" + id;
+const urlSession = "/api/user/current-user";
 
 axios
   .get(url)
   .then((response) => {
     console.log("데이터: ", response.data);
-    displaySingleProduct(response.data.data);
+    displaySingleProduct(response.data);
   })
   .catch((error) => {
     console.log("에러 발생: ", error.response.data);
@@ -34,7 +34,7 @@ function displaySingleProduct(data) {
   lowBox.classList.add("low-box");
   cartBtn.classList.add("cartBtn");
   // 태그속성추가
-  img.src = data.image;
+  img.src = data.imageUrl;
   title.textContent = "게임 타이틀 : " + data.title;
   genre.textContent = "게임 장르 : " + data.genre;
   price.textContent = "게임 가격 : " + data.price + "원";

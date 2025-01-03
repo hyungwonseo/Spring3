@@ -1,5 +1,6 @@
 package dw.gameshop.model;
 
+import dw.gameshop.dto.BoardDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,23 +17,27 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT") // 65535 byte
     private String content;
-
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_name", nullable = false)
     private User author;
-
-    @Column(nullable = false, name="created_date")
+    @Column(name="created_date", nullable = false)
     private LocalDateTime createdDate = LocalDateTime.now();
-
-    @Column(nullable = false, name="modified_date")
+    @Column(name="modified_date", nullable = false)
     private LocalDateTime modifiedDate = LocalDateTime.now();
-
     @Column(name="is_active")
     private Boolean isActive = true;
+
+    public BoardDTO toDto() {
+        return new BoardDTO(
+                this.id,
+                this.title,
+                this.content,
+                this.author.getUserName(),
+                this.modifiedDate
+        );
+    }
 }

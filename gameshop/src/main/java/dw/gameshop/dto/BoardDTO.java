@@ -14,16 +14,6 @@ public class BoardDTO {
     private Long id;
     private String title;
     private String content;
-    private UserDTO author;
+    private String authorName;
     private LocalDateTime modifiedDate;
-
-    public static BoardDTO toBoardDto(Board board) {
-        return new BoardDTO(
-                board.getId(),
-                board.getTitle(),
-                board.getContent(),
-                UserDTO.toUserDto(board.getAuthor()),
-                board.getModifiedDate()
-        );
-    }
 }

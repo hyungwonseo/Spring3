@@ -1,7 +1,7 @@
 const urlLogin = "/api/user/login";
 const urlLogout = "/api/user/logout";
 const urlSignup = "/api/user/signup";
-const urlSession = "/api/user/current";
+const urlSession = "/api/user/current-user";
 let userId = "";
 let password = "";
 let userIdSignup = "";
@@ -36,7 +36,7 @@ document.querySelector("#userEmail").addEventListener("change", (e) => {
 
 document.querySelector(".loginBtn").addEventListener("click", () => {
   const data = {
-    userId: userId,
+    userName: userId,
     password: password,
   };
   axios
@@ -95,12 +95,12 @@ function sessionCurrent() {
     .get(urlSession, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
-      if (response.data.resultCode == "SUCCESS") {
+      if (response.data != "") {
         console.log("세션 유지");
         document.querySelector(".login-box").classList.add("hidden");
         document.querySelector(".user-box").classList.remove("hidden");
         document.querySelector(".user-box p").textContent =
-          response.data.data.userId + "님, 환영합니다.";
+          response.data + "님, 환영합니다.";
       }
     })
     .catch((error) => {

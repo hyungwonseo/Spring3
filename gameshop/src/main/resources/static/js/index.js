@@ -1,10 +1,10 @@
-const url = "/api/products";
+const url = "/api/game/all";
 
 axios
   .get(url)
   .then((response) => {
     console.log("응답 Response: ", response);
-    displayProducts(response.data.data);
+    displayProducts(response.data);
   })
   .catch((error) => {
     console.log("에러 발생: ", error.response.data);
@@ -19,7 +19,7 @@ function displayProducts(gameData) {
       game.classList.add("game");
       const img = document.createElement("img");
       img.classList.add("image");
-      img.src = data.image;
+      img.src = data.imageUrl;
       game.appendChild(img);
       const title = document.createElement("p");
       const genre = document.createElement("p");

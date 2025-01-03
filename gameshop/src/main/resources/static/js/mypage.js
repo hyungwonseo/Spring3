@@ -1,7 +1,7 @@
 const urlPurchaseAll = "/api/products/purchase";
 const urlPurchaseById = "/api/products/purchase/id/";
 const urlPurchaseByCurrent = "/api/products/purchase/current";
-const urlSession = "/api/user/current";
+const urlSession = "/api/user/current-user";
 
 const adminPage = document.querySelector(".admin_page");
 const userPage = document.querySelector(".user_page");

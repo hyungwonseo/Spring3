@@ -1,5 +1,7 @@
 package dw.gameshop.model;
 
+import dw.gameshop.dto.PurchaseDTO;
+import dw.gameshop.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,8 +22,17 @@ public class Purchase {
     @JoinColumn(name = "game_id")
     private Game game;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_name")
     private User user;
     @Column(name="purchase_time")
     private LocalDateTime purchaseTime;
+
+    public PurchaseDTO toDto() {
+        return new PurchaseDTO(
+                this.id,
+                this.game,
+                this.user.toDto(),
+                this.purchaseTime
+        );
+    }
 }

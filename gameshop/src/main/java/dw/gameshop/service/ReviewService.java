@@ -1,8 +1,12 @@
 package dw.gameshop.service;
 
 import dw.gameshop.dto.ReviewDTO;
+import dw.gameshop.enums.GameRating;
+import dw.gameshop.exception.ResourceNotFoundException;
 import dw.gameshop.model.Review;
+import dw.gameshop.repository.GameRepository;
 import dw.gameshop.repository.ReviewRepository;
+import dw.gameshop.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,24 +20,27 @@ import java.util.List;
 public class ReviewService {
     @Autowired
     ReviewRepository reviewRepository;
+    @Autowired
+    GameRepository gameRepository;
+    @Autowired
+    UserRepository userRepository;
 
-    public Review saveReview(Review review) {
-        review.setCreatedAt(LocalDateTime.now());
-        return reviewRepository.save(review);
+    public ReviewDTO saveReview(ReviewDTO reviewDTO) {
+        Review review = new Review(
+                0,
+                gameRepository.findById(reviewDTO.getGameId())
+                    .orElseThrow(()->new ResourceNotFoundException("No Game ID")),
+                userRepository.findById(reviewDTO.getUserName())
+                    .orElseThrow(()->new ResourceNotFoundException("No Username")),
+                GameRating.valueOf(reviewDTO.getReviewPoint()),
+                reviewDTO.getReviewText(),
+                LocalDateTime.now());
+        return reviewRepository.save(review).toDto();
     }
 
-    public List<Review> getReviewAll() {
-        return reviewRepository.findAll();
-    }
-
-    public List<ReviewDTO> getReviewAllByDto() {
-        List<Review> reviewList = reviewRepository.findAll();
-        List<ReviewDTO> reviewDTOList = new ArrayList<>();
-        for (int i=0; i<reviewList.size(); i++) {
-            ReviewDTO reviewDto = new ReviewDTO();
-            reviewDTOList.add(reviewDto.toReviewDtoFromReview(reviewList.get(i)));
-        }
-        return reviewDTOList;
+    public List<ReviewDTO> getReviewAll() {
+        return reviewRepository.findAll().stream()
+                .map(Review::toDto).toList();
     }
 }
 

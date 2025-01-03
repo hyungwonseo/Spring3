@@ -4,6 +4,7 @@ import dw.gameshop.dto.BoardDTO;
 import dw.gameshop.exception.ResourceNotFoundException;
 import dw.gameshop.model.Board;
 import dw.gameshop.repository.BoardRepository;
+import dw.gameshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,24 +15,32 @@ import java.util.stream.Collectors;
 @Service
 public class BoardService {
     @Autowired
-    private BoardRepository boardRepository;
+    BoardRepository boardRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public List<BoardDTO> getAllBoards() {
-        List<Board> boardList = boardRepository.findAll()
-                .stream().filter((b)->b.getIsActive()).collect(Collectors.toList());
-        return boardList.stream().map((b)-> BoardDTO.toBoardDto(b)).collect(Collectors.toList());
+        return boardRepository.findAll().stream()
+                .filter(Board::getIsActive)
+                .map(Board::toDto)
+                .toList();
     }
 
-    public BoardDTO saveBoard(Board board) {
-        return boardRepository.findById(board.getId())
-                .map((existingBoard)->{
-                    existingBoard.setModifiedDate(LocalDateTime.now());
-                    return BoardDTO.toBoardDto(boardRepository.save(existingBoard));
+    public BoardDTO saveBoard(BoardDTO boardDTO) {
+        return boardRepository.findById(boardDTO.getId())
+                .map((board)->{
+                    board.setModifiedDate(LocalDateTime.now());
+                    return boardRepository.save(board).toDto();
                 })
                 .orElseGet(()-> {
-                    board.setCreatedDate(LocalDateTime.now());
-                    board.setModifiedDate(LocalDateTime.now());
-                    return BoardDTO.toBoardDto(boardRepository.save(board));
+                    Board board = new Board(
+                            null,
+                            boardDTO.getTitle(),
+                            boardDTO.getContent(),
+                            userRepository.findById(boardDTO.getAuthorName())
+                                    .orElseThrow(()->new ResourceNotFoundException("No UserName")),
+                            null,null,null);
+                    return boardRepository.save(board).toDto();
                 });
     }
 

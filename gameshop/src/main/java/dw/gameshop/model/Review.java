@@ -1,5 +1,7 @@
 package dw.gameshop.model;
 
+import dw.gameshop.dto.ReviewDTO;
+import dw.gameshop.enums.GameRating;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,14 +22,24 @@ public class Review {
     @JoinColumn(name="game_id")
     private Game game;
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_name")
     private User user;
     @Column(name="point", nullable = false)
-    private int point;
-    @Column(name="review_text", length=65535)
+    private GameRating point;
+    @Column(name="review_text", columnDefinition = "TEXT")
     private String reviewText;
     @Column(name="created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    public ReviewDTO toDto() {
+        return new ReviewDTO(
+                this.id,
+                this.game.getTitle(),
+                this.user.getUserName(),
+                this.point.name(),
+                this.reviewText
+        );
+    }
 }
 
 

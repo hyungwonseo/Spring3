@@ -5,11 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
-public interface GameShopRepository extends JpaRepository<Game, Long> {
-    @Query("select g1 from Game g1 where g1.price = (select max(g2.price) from Game g2)")
+public interface GameRepository extends JpaRepository<Game, Long> {
+    @Query("select g from Game g where g.price = (select max(g.price) from Game g)")
     public Game getGameWithMaxPrice();
 
-    @Query("select g1 from Game g1 order by g1.price desc")
+    @Query("select g from Game g order by g.price desc limit 3")
     public List<Game> getGameWithMaxPriceTop3();
 }
 

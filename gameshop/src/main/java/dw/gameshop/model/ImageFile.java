@@ -14,7 +14,8 @@ public class ImageFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String filename;
+    @Column(name = "file_name")
+    private String fileName;
     @Lob
     @Column(name = "data", columnDefinition = "LONGBLOB", unique = true)
     private byte[] data;

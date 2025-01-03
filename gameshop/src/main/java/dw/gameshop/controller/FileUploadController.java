@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
+@RequestMapping("/api")
 public class FileUploadController {
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -41,16 +42,16 @@ public class FileUploadController {
         }
     }
 
-    @GetMapping("/download/{filename}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
         try {
-            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+            Path filePath = Paths.get(uploadDir).resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() || resource.isReadable()) {
                 return ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION,
-                                "attachment; filename=\"" + resource.getFilename() + "\"")
+                                "attachment; fileName=\"" + resource.getFilename() + "\"")
                         .body(resource);
             } else {
                 return ResponseEntity.notFound().build();

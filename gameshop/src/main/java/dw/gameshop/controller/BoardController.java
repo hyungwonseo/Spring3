@@ -1,7 +1,6 @@
 package dw.gameshop.controller;
 
 import dw.gameshop.dto.BoardDTO;
-import dw.gameshop.model.Board;
 import dw.gameshop.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,26 +10,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/board")
 public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/board")
+    @GetMapping("/all")
     public ResponseEntity<List<BoardDTO>> getAllBoards() {
         return new ResponseEntity<>(
                 boardService.getAllBoards(),
                 HttpStatus.OK);
     }
 
-    @PostMapping("/board")
-    public ResponseEntity<BoardDTO> saveBoard(@RequestBody Board board) {
+    @PostMapping("/save")
+    public ResponseEntity<BoardDTO> saveBoard(@RequestBody BoardDTO boardDTO) {
         return new ResponseEntity<>(
-                boardService.saveBoard(board),
+                boardService.saveBoard(boardDTO),
                 HttpStatus.CREATED);
     }
 
-    @PostMapping("/board/delete/{id}")
+    @PostMapping("/delete/{id}")
     public ResponseEntity<String> deleteBoard(@PathVariable long id) {
         return new ResponseEntity<>(
                 boardService.deleteBoard(id),

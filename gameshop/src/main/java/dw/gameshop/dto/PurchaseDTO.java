@@ -16,13 +16,4 @@ public class PurchaseDTO {
     private Game game;
     private UserDTO user;
     private LocalDateTime purchaseTime;
-
-    public static PurchaseDTO toPurchaseDto(Purchase purchase) {
-        return new PurchaseDTO(
-                purchase.getId(),
-                purchase.getGame(),
-                UserDTO.toUserDto(purchase.getUser()),
-                purchase.getPurchaseTime()
-        );
-    }
 }

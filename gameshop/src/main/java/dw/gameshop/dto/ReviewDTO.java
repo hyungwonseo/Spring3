@@ -11,7 +11,7 @@ import lombok.*;
 public class ReviewDTO {
     private long gameId;
     private String gameName;
-    private String userId;
+    private String userName;
     private int reviewPoint;
     private String reviewText;
 
@@ -23,7 +23,7 @@ public class ReviewDTO {
         reviewDto.setReviewText(review.getReviewText());
         reviewDto.setGameId(review.getGame().getId());
         reviewDto.setGameName(review.getGame().getTitle());
-        reviewDto.setUserId(review.getUser().getUserId());
+        reviewDto.setUserName(review.getUser().getUserName());
         return reviewDto;
     }
     // ReviewDto를 Review 엔티티로 형변환하는 메서드

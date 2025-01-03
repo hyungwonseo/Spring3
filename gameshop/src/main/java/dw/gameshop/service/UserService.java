@@ -23,7 +23,6 @@ public class UserService {
             return "Username already exists!";
         }
         User user = new User(
-                null,
                 userDTO.getUserName(),
                 passwordEncoder.encode(userDTO.getPassword()),
                 userDTO.getEmail(),

@@ -13,9 +13,7 @@ import java.time.LocalDateTime;
 @Table(name="user")
 public class User {
     @Id
-    @Column(name="user_id", length=100)
-    private String userId;
-    @Column(name="user_name", length=255, nullable = false)
+    @Column(name="user_name", length=255)
     private String userName;
     @Column(name="password", nullable = false)
     private String password;

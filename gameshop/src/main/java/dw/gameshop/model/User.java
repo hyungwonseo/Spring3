@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Entity
 @Table(name="user")
 public class User {
@@ -20,10 +19,10 @@ public class User {
     private String userId;
     @Column(name="user_name", length=255, nullable = false)
     private String userName;
-    @Column(name="email", length=255, nullable = false, unique = true)
-    private String email;
     @Column(name="password", nullable = false)
     private String password;
+    @Column(name="email", length=255, nullable = false, unique = true)
+    private String email;
     @ManyToOne
     @JoinColumn(name = "user_authority")
     private Authority authority;

@@ -9,16 +9,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class UserDTO {
-    private String userId;
-    private String password;
     private String userName;
-    private String userEmail;
+    private String password;
+    private String email;
 
     public static UserDTO toUserDto(User user) {
         return new UserDTO(
-                user.getUserId(),
-                null,
                 user.getUserName(),
+                null,
                 user.getEmail()
         );
     }

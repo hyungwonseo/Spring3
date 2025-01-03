@@ -1,6 +1,7 @@
 package dw.gameshop.service;
 
 import dw.gameshop.dto.UserDTO;
+import dw.gameshop.model.Authority;
 import dw.gameshop.model.User;
 import dw.gameshop.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -21,24 +24,23 @@ public class UserService {
         if (userRepository.findByUserName(userDTO.getUserName()).isPresent()) {
             return "Username already exists!";
         }
-        User user = new User();
-        user.setUserName(userDTO.getUserName());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setUserName(userDTO.getUserName());
+        User user = new User(
+                null,
+                userDTO.getUserName(),
+                passwordEncoder.encode(userDTO.getPassword()),
+                userDTO.getEmail(),
+                new Authority("User"),
+                LocalDateTime.now()
+        );
         userRepository.save(user);
         return "User registered successfully!";
     }
 
     public boolean validateUser(String username, String password) {
-        // 유저 확인
         User user = userRepository.findByUserName(username).orElseThrow();
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            return true;
-        }
-        return false;
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
-    // 세션에서 유저네임을 가져오는 메서드
     public String getCurrentUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);  // 세션이 없으면 null 반환
         if (session != null) {

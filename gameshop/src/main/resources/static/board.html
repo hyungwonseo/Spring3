@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+    />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">
+        <h1>GAME SHOP</h1>
+      </div>
+      <div class="menu">
+        <div><a href="index.html">HOME</a></div>
+        <div><a href="board.html">BOARD</a></div>
+        <div><a href="mypage.html">MY PAGE</a></div>
+        <div><a href="login.html">LOGIN</a></div>
+        <div><a href="cart.html">CART</a></div>
+      </div>
+      <div class="board">
+        <div class="board-title">
+          <h1>게시판</h1>
+          <div class="writeBtn">글쓰기</div>
+        </div>
+        <table class="board-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th class="col">제목</th>
+              <th>작성자</th>
+              <th>날짜</th>
+            </tr>
+          </thead>
+          <tbody class="item-head"></tbody>
+        </table>
+        <div class="item-text hidden">
+          <div class="item-text-head"></div>
+          <div class="item-text-body"></div>
+        </div>
+        <div class="board-page">
+          <div class="board-page-left">previous</div>
+          <div class="board-page-num"></div>
+          <div class="board-page-right">next</div>
+          <div class="item-text-back-btn hidden">BACK</div>
+        </div>
+      </div>
+      <div class="footer">
+        <h3>FOOTER</h3>
+      </div>
+      <div class="modal hidden">
+        <div>제 목</div>
+        <input class="modal-title" />
+        <div>작성자</div>
+        <div class="modal-writer"></div>
+        <div>내 용</div>
+        <textarea class="modal-text"></textarea>
+        <div></div>
+        <div>
+          <span class="modal-save-btn">SAVE</span>
+          <span class="modal-close-btn">CLOSE</span>
+        </div>
+      </div>
+      <div class="backdrop hidden"></div>
+    </div>
+    <script src="/js/board.js"></script>
+  </body>
+</html>

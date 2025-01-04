@@ -32,7 +32,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(UnauthorizedUserException.class)
     protected ResponseEntity<Map<String, String>> handleUnauthorizedUserException(UnauthorizedUserException ex) {
-        Map<String, String> errors = Map.of("Authentication Failed",
+        Map<String, String> errors = Map.of("ERROR",
                 (ex.getMessage() != null ? ex.getMessage() : "No Exception Message"));
         return new ResponseEntity<>(
                 errors,

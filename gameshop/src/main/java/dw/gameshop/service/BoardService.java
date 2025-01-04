@@ -39,7 +39,9 @@ public class BoardService {
                             boardDTO.getContent(),
                             userRepository.findById(boardDTO.getAuthorName())
                                     .orElseThrow(()->new ResourceNotFoundException("No UserName")),
-                            null,null,null);
+                            LocalDateTime.now(),
+                            LocalDateTime.now(),
+                            true);
                     return boardRepository.save(board).toDto();
                 });
     }

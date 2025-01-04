@@ -33,9 +33,15 @@ public class PurchaseService {
         return purchaseRepository.save(purchase);
     }
 
-    public List<PurchaseDTO> savePurchaseList(List<Purchase> purchaseList) {
-        return purchaseList.stream().map(purchase -> {
-            purchase.setPurchaseTime(LocalDateTime.now());
+    public List<PurchaseDTO> savePurchaseList(List<PurchaseDTO> purchaseList) {
+        return purchaseList.stream().map(purchaseDTO -> {
+            Purchase purchase = new Purchase(
+                    0,
+                    purchaseDTO.getGame(),
+                    userRepository.findById(purchaseDTO.getUser().getUserName())
+                            .orElseThrow(()->new ResourceNotFoundException("No User")),
+                    LocalDateTime.now()
+            );
             return purchaseRepository.save(purchase);
         }).map(Purchase::toDto).toList();
     }

@@ -1,6 +1,7 @@
 package dw.gameshop.controller;
 
 import dw.gameshop.dto.UserDTO;
+import dw.gameshop.exception.UnauthorizedUserException;
 import dw.gameshop.model.User;
 import dw.gameshop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,9 +38,7 @@ public class UserController {
                     "Login successful",
                     HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(
-                    "Invalid credentials",
-                    HttpStatus.UNAUTHORIZED);
+            throw new UnauthorizedUserException("Authentication Failed");
         }
     }
 

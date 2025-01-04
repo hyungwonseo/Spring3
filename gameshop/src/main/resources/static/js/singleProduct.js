@@ -65,15 +65,13 @@ function sessionCurrent(data) {
     .get(urlSession, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
-      if (response.data != "" && response.data != null) {
-        const userName = response.data.userName;
-        let cartItems = JSON.parse(localStorage.getItem(userName));
-        if (!cartItems) {
-          cartItems = [];
-        }
-        cartItems.push(data);
-        localStorage.setItem(userName, JSON.stringify(cartItems));
+      const userName = response.data.userName;
+      let cartItems = JSON.parse(localStorage.getItem(userName));
+      if (!cartItems) {
+        cartItems = [];
       }
+      cartItems.push(data);
+      localStorage.setItem(userName, JSON.stringify(cartItems));
     })
     .catch((error) => {
       console.log("에러 발생:", error.response.data);

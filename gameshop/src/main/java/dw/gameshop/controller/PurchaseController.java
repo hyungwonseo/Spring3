@@ -25,7 +25,7 @@ public class PurchaseController {
     }
 
     @PostMapping("/save/list")
-    public ResponseEntity<List<PurchaseDTO>> savePurchaseList(@RequestBody List<Purchase> purchaseList) {
+    public ResponseEntity<List<PurchaseDTO>> savePurchaseList(@RequestBody List<PurchaseDTO> purchaseList) {
         return new ResponseEntity<>(
                 purchaseService.savePurchaseList(purchaseList),
                 HttpStatus.CREATED);

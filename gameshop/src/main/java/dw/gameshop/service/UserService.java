@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,8 +26,10 @@ public class UserService {
     AuthorityRepository authorityRepository;
 
     public UserDTO registerUser(UserDTO userDTO) {
-        User user = userRepository.findById(userDTO.getUserName())
-                .orElseThrow(()->new InvalidRequestException("Username already exists"));
+        Optional<User> user = userRepository.findById(userDTO.getUserName());
+        if (user.isPresent()) {
+            throw new InvalidRequestException("Username already exists");
+        }
         return userRepository.save(
                     new User(
                         userDTO.getUserName(),

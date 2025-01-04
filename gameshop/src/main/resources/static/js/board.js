@@ -1,5 +1,5 @@
 const urlBoard = "/api/board/all";
-const urlSaveBoard = "/api/board";
+const urlSaveBoard = "/api/board/save";
 const urlDeleteBoard = "/api/board/delete";
 const urlSession = "/api/user/current-user";
 
@@ -14,15 +14,13 @@ function sessionCurrent() {
     .get(urlSession, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
-      if (response.data.resultCode == "SUCCESS") {
-        currentUser = response.data.data;
-        const modal = document.querySelector(".modal");
-        const backdrop = document.querySelector(".backdrop");
-        modal.classList.remove("hidden");
-        backdrop.classList.remove("hidden");
-        document.querySelector(".modal-writer").textContent =
-          currentUser.userId;
-      }
+      currentUser = response.data;
+      const modal = document.querySelector(".modal");
+      const backdrop = document.querySelector(".backdrop");
+      modal.classList.remove("hidden");
+      backdrop.classList.remove("hidden");
+      document.querySelector(".modal-writer").textContent =
+        currentUser.userName;
     })
     .catch((error) => {
       console.log("에러 발생:", error.response.data);
@@ -35,7 +33,7 @@ function getBoard() {
     .get(urlBoard, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
-      dataList = response.data.data;
+      dataList = response.data;
       pageEnd = Math.ceil(dataList.length / itemsPerPage);
       displayPageNum();
       displayBoardHead(1);
@@ -73,7 +71,7 @@ function displayBoardHead(page) {
         // 태그속성추가
         id.textContent = (page - 1) * itemsPerPage + index + 1;
         title.textContent = data[index].title;
-        writer.textContent = data[index].author.userId;
+        writer.textContent = data[index].authorName;
         dTime.textContent = formatPurchaseDate(data[index].modifiedDate);
         // appendChild 부모자식 위치 설정
         tr.appendChild(id);
@@ -112,7 +110,7 @@ function displayBoardText(data, idValue, pageNum) {
   // 태그속성추가
   id.textContent = idValue;
   title.textContent = data.title;
-  writer.textContent = data.author.userId;
+  writer.textContent = data.authorName;
   dTime.textContent = formatPurchaseDate(data.modifiedDate);
   // appendChild 부모자식 위치 설정
   div.appendChild(id);
@@ -198,12 +196,7 @@ document.querySelector(".modal-save-btn").addEventListener("click", () => {
     id: 0,
     title: title,
     content: content,
-    author: {
-      userId: currentUser.userId,
-      authority: {
-        authorityName: currentUser.authority[0].authority,
-      },
-    },
+    authorName: currentUser.userName,
   };
   axios
     .post(urlSaveBoard, data, { withCredentials: true })

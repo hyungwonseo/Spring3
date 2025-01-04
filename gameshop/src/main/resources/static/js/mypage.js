@@ -1,6 +1,6 @@
-const urlPurchaseAll = "/api/products/purchase";
-const urlPurchaseById = "/api/products/purchase/id/";
-const urlPurchaseByCurrent = "/api/products/purchase/current";
+const urlPurchaseAll = "/api/purchase/all";
+const urlPurchaseById = "/api/purchase/user/";
+const urlPurchaseByCurrent = "/api/purchase/current-user";
 const urlSession = "/api/user/current-user";
 
 const adminPage = document.querySelector(".admin_page");
@@ -11,57 +11,54 @@ function sessionCurrent() {
     .get(urlSession, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
-      if (response.data.resultCode == "SUCCESS") {
-        console.log("세션 유지");
-        const userId = response.data.data.userId;
-        const authority = response.data.data.authority[0].authority;
-        if (authority == "ROLE_ADMIN") {
-          adminPage.classList.remove("hidden");
-          userPage.classList.add("hidden");
-        } else if (authority == "ROLE_USER") {
-          adminPage.classList.add("hidden");
-          userPage.classList.remove("hidden");
+      console.log("세션 유지");
+      const userId = response.data.userName;
+      const authority = response.data.role;
+      if (authority == "ADMIN") {
+        adminPage.classList.remove("hidden");
+        userPage.classList.add("hidden");
+      } else if (authority == "USER") {
+        adminPage.classList.add("hidden");
+        userPage.classList.remove("hidden");
+        axios
+          .get(urlPurchaseByCurrent, { withCredentials: true })
+          .then((response) => {
+            console.log("데이터:", response.data);
+            displayPurchaseInfo(response.data);
+          })
+          .catch((error) => {
+            console.log("에러 발생:", error.response.data);
+          });
+      } else {
+        console.log("에러! 여기오면 안되는데..");
+      }
+      document
+        .querySelector(".pageSubmitBtn")
+        .addEventListener("click", () => {
+          const dropdown = document.querySelector("#dropdown");
+          const selectedUserId = document.querySelector("#userIdInput").value;
+          let url = "";
+          if (dropdown.value == "userId") {
+            if (selectedUserId == "" || selectedUserId == null) {
+              alert("유저 아이디를 입력해주세요.");
+              return;
+            } else {
+              url = urlPurchaseById + selectedUserId;
+            }
+          } else {
+            url = urlPurchaseAll;
+          }
           axios
-            .get(urlPurchaseByCurrent, { withCredentials: true })
+            .get(url, { withCredentials: true })
             .then((response) => {
               console.log("데이터:", response.data);
-              displayPurchaseInfo(response.data.data);
+              displayPurchaseInfo(response.data);
             })
             .catch((error) => {
               console.log("에러 발생:", error.response.data);
+              alert("입력하신 유저 아이디는 존재하지 않습니다.");
             });
-        } else {
-          console.log("에러! 여기오면 안되는데..");
-        }
-
-        document
-          .querySelector(".pageSubmitBtn")
-          .addEventListener("click", () => {
-            const dropdown = document.querySelector("#dropdown");
-            const selectedUserId = document.querySelector("#userIdInput").value;
-            let url = "";
-            if (dropdown.value == "userId") {
-              if (selectedUserId == "" || selectedUserId == null) {
-                alert("유저 아이디를 입력해주세요.");
-                return;
-              } else {
-                url = urlPurchaseById + selectedUserId;
-              }
-            } else {
-              url = urlPurchaseAll;
-            }
-            axios
-              .get(url, { withCredentials: true })
-              .then((response) => {
-                console.log("데이터:", response.data);
-                displayPurchaseInfo(response.data.data);
-              })
-              .catch((error) => {
-                console.log("에러 발생:", error.response.data);
-                alert("입력하신 유저 아이디는 존재하지 않습니다.");
-              });
-          });
-      }
+        });
     })
     .catch((error) => {
       console.log("에러 발생:", error.response.data);
@@ -95,7 +92,7 @@ function displayPurchaseInfo(games) {
     num.textContent = index + 1;
     gameId.textContent = data.game.id;
     title.textContent = data.game.title;
-    userId.textContent = data.user.userId;
+    userId.textContent = data.user.userName;
     date.textContent = formatPurchaseDate(data.purchaseTime);
     // appendChild 부모자식 위치 설정
     tr.appendChild(num);

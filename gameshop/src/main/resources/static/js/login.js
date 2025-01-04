@@ -4,9 +4,9 @@ const urlSignup = "/api/user/register";
 const urlSession = "/api/user/current-user";
 let userId = "";
 let password = "";
-let userIdSignup = "";
+let userNameSignup = "";
 let passwordSignup = "";
-let userName = "";
+let realName = "";
 let userEmail = "";
 
 document.querySelector("#userId").addEventListener("change", (e) => {
@@ -17,17 +17,17 @@ document.querySelector("#password").addEventListener("change", (e) => {
   console.log(e.target.value);
   password = e.target.value;
 });
-document.querySelector("#userIdSignup").addEventListener("change", (e) => {
+document.querySelector("#userNameSignup").addEventListener("change", (e) => {
   console.log(e.target.value);
-  userIdSignup = e.target.value;
+  userNameSignup = e.target.value;
 });
 document.querySelector("#passwordSignup").addEventListener("change", (e) => {
   console.log(e.target.value);
   passwordSignup = e.target.value;
 });
-document.querySelector("#userName").addEventListener("change", (e) => {
+document.querySelector("#realName").addEventListener("change", (e) => {
   console.log(e.target.value);
-  userName = e.target.value;
+  realName = e.target.value;
 });
 document.querySelector("#userEmail").addEventListener("change", (e) => {
   console.log(e.target.value);
@@ -55,10 +55,8 @@ document.querySelector(".logoutBtn").addEventListener("click", () => {
       .post(urlLogout, {}, { withCredentials: true })
       .then((response) => {
         console.log("데이터:", response.data);
-        if (response.data.resultCode == "SUCCESS") {
-          document.querySelector(".login-box").classList.remove("hidden");
-          document.querySelector(".user-box").classList.add("hidden");
-        }
+        document.querySelector(".login-box").classList.remove("hidden");
+        document.querySelector(".user-box").classList.add("hidden");
       })
       .catch((error) => {
         console.log("에러 발생:", error.response.data);
@@ -67,10 +65,11 @@ document.querySelector(".logoutBtn").addEventListener("click", () => {
 });
 document.querySelector(".signupBtn").addEventListener("click", () => {
   const data = {
-    userId: userIdSignup,
+    userName: userNameSignup,
     password: passwordSignup,
-    userName: userName,
-    userEmail: userEmail,
+    realName: realName,
+    email: userEmail,
+    role: "",
   };
   axios
     .post(urlSignup, data, { withCredentials: true })
@@ -95,13 +94,11 @@ function sessionCurrent() {
     .get(urlSession, { withCredentials: true })
     .then((response) => {
       console.log("데이터:", response.data);
-      if (response.data != "" && response.data != null) {
-        console.log("세션 유지");
-        document.querySelector(".login-box").classList.add("hidden");
-        document.querySelector(".user-box").classList.remove("hidden");
-        document.querySelector(".user-box p").textContent =
-          response.data.userName + "님, 환영합니다.";
-      }
+      console.log("세션 유지");
+      document.querySelector(".login-box").classList.add("hidden");
+      document.querySelector(".user-box").classList.remove("hidden");
+      document.querySelector(".user-box p").textContent =
+        response.data.userName + "님, 환영합니다.";
     })
     .catch((error) => {
       console.log("에러 발생:", error.response.data);

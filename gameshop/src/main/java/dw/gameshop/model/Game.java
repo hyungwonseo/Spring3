@@ -18,7 +18,8 @@ public class Game {
     @Column(name = "title")
     private String title;
     @Column(name = "genre")
-    private String genre;
+    @Enumerated(EnumType.STRING)
+    private GameGenre genre;
     @Column(name = "price")
     private int price;
     @Column(name = "image_url")

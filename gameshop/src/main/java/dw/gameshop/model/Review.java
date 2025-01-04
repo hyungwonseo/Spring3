@@ -25,6 +25,7 @@ public class Review {
     @JoinColumn(name="user_name")
     private User user;
     @Column(name="point", nullable = false)
+    @Enumerated(EnumType.STRING)
     private GameRating point;
     @Column(name="review_text", columnDefinition = "TEXT")
     private String reviewText;

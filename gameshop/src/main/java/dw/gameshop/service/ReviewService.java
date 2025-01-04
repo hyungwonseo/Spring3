@@ -28,8 +28,8 @@ public class ReviewService {
     public ReviewDTO saveReview(ReviewDTO reviewDTO) {
         Review review = new Review(
                 0,
-                gameRepository.findById(reviewDTO.getGameId())
-                    .orElseThrow(()->new ResourceNotFoundException("No Game ID")),
+                gameRepository.findByTitle(reviewDTO.getGameTitle())
+                    .orElseThrow(()->new ResourceNotFoundException("No Game Title")),
                 userRepository.findById(reviewDTO.getUserName())
                     .orElseThrow(()->new ResourceNotFoundException("No Username")),
                 GameRating.valueOf(reviewDTO.getReviewPoint()),

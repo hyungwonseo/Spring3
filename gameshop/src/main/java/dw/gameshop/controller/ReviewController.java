@@ -1,7 +1,6 @@
 package dw.gameshop.controller;
 
 import dw.gameshop.dto.ReviewDTO;
-import dw.gameshop.model.Review;
 import dw.gameshop.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

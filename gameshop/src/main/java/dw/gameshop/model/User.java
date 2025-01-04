@@ -33,7 +33,8 @@ public class User {
                 this.userName,
                 null,
                 this.email,
-                this.realName
+                this.realName,
+                authority.getAuthorityName()
         );
     }
 }

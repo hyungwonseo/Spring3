@@ -29,6 +29,13 @@ public class ReviewController {
                 reviewService.getReviewAll(),
                 HttpStatus.OK);
     }
+
+    @GetMapping("/game/id/{id}")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByGameId(@PathVariable long gameId) {
+        return new ResponseEntity<>(
+                reviewService.getReviewsByGameId(gameId),
+                HttpStatus.OK);
+    }
 }
 
 

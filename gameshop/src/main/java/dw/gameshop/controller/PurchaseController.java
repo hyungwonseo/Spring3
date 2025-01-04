@@ -38,10 +38,12 @@ public class PurchaseController {
                 HttpStatus.OK);
     }
 
+    // 유저별 구매내역 조회. 관리자 권한이 있어야 조회 가능
     @GetMapping("/user/{userName}")
-    public ResponseEntity<List<PurchaseDTO>> getPurchaseListByUserName(@PathVariable String userName) {
+    public ResponseEntity<List<PurchaseDTO>> getPurchaseListByUserName(@PathVariable String userName,
+                                                                       HttpServletRequest request) {
         return new ResponseEntity<>(
-                purchaseService.getPurchaseListByUserName(userName),
+                purchaseService.getPurchaseListByUserName(userName, request),
                 HttpStatus.OK);
     }
 

@@ -42,6 +42,11 @@ public class ReviewService {
         return reviewRepository.findAll().stream()
                 .map(Review::toDto).toList();
     }
+
+    public List<ReviewDTO> getReviewsByGameId(long gameId) {
+        return reviewRepository.getReviewsByGameId(gameId).stream()
+                .map(Review::toDto).toList();
+    }
 }
 
 

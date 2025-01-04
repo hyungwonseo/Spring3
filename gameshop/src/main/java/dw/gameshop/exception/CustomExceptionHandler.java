@@ -32,10 +32,19 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(UnauthorizedUserException.class)
     protected ResponseEntity<Map<String, String>> handleUnauthorizedUserException(UnauthorizedUserException ex) {
-        Map<String, String> errors = Map.of("Authentication failed",
+        Map<String, String> errors = Map.of("Authentication Failed",
                 (ex.getMessage() != null ? ex.getMessage() : "No Exception Message"));
         return new ResponseEntity<>(
                 errors,
                 HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(PermissionDeniedException.class)
+    protected ResponseEntity<Map<String, String>> handlePermissionDeniedException(PermissionDeniedException ex) {
+        Map<String, String> errors = Map.of("Permission Denied",
+                (ex.getMessage() != null ? ex.getMessage() : "No Exception Message"));
+        return new ResponseEntity<>(
+                errors,
+                HttpStatus.FORBIDDEN);
     }
 }

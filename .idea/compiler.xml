@@ -3,14 +3,11 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for companyapp" enabled="true">
+      <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-        </processorPath>
-        <module name="companyapp" />
+        <module name="gameshop" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +15,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="companyapp" options="-parameters" />
       <module name="firstapp" options="-parameters" />
+      <module name="gameshop" options="-parameters" />
       <module name="jdbcapp" options="-parameters" />
       <module name="jpaapp" options="-parameters" />
     </option>

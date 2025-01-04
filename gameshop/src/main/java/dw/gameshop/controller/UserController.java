@@ -1,6 +1,5 @@
 package dw.gameshop.controller;
 
-import dw.gameshop.dto.SessionDTO;
 import dw.gameshop.dto.UserDTO;
 import dw.gameshop.exception.UnauthorizedUserException;
 import dw.gameshop.service.UserService;

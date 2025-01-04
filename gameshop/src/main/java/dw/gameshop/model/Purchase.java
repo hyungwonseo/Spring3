@@ -1,7 +1,6 @@
 package dw.gameshop.model;
 
 import dw.gameshop.dto.PurchaseDTO;
-import dw.gameshop.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

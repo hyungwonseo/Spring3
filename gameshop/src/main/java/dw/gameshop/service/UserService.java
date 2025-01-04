@@ -3,7 +3,6 @@ package dw.gameshop.service;
 import dw.gameshop.dto.UserDTO;
 import dw.gameshop.exception.InvalidRequestException;
 import dw.gameshop.exception.ResourceNotFoundException;
-import dw.gameshop.model.Authority;
 import dw.gameshop.model.User;
 import dw.gameshop.repository.AuthorityRepository;
 import dw.gameshop.repository.UserRepository;

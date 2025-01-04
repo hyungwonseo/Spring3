@@ -2,6 +2,7 @@ package dw.gameshop.controller;
 
 import dw.gameshop.dto.UserDTO;
 import dw.gameshop.exception.UnauthorizedUserException;
+import dw.gameshop.model.User;
 import dw.gameshop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,11 +54,7 @@ public class UserController {
 
     @GetMapping("/current-user")
     public ResponseEntity<UserDTO> getCurrentUser(HttpServletRequest request) {
-        UserDTO userDTO = userService.getCurrentUser(request);  // 세션에서 유저네임 조회
-        if (userDTO != null) {
-            return new ResponseEntity<>(userDTO, HttpStatus.OK);  // 로그인한 유저네임 반환
-        } else {
-            throw new UnauthorizedUserException("User not logged in");
-        }
+        User user = userService.getCurrentUser(request);
+        return new ResponseEntity<>(user.toDto(), HttpStatus.OK);
     }
 }

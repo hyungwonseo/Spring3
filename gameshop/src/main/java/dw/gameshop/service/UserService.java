@@ -3,6 +3,7 @@ package dw.gameshop.service;
 import dw.gameshop.dto.UserDTO;
 import dw.gameshop.exception.InvalidRequestException;
 import dw.gameshop.exception.ResourceNotFoundException;
+import dw.gameshop.exception.UnauthorizedUserException;
 import dw.gameshop.model.User;
 import dw.gameshop.repository.AuthorityRepository;
 import dw.gameshop.repository.UserRepository;
@@ -44,14 +45,13 @@ public class UserService {
         return passwordEncoder.matches(password, user.getPassword());
     }
 
-    public UserDTO getCurrentUser(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);  // 세션이 없으면 null 반환
-        if (session != null) {
-            String userName = (String) session.getAttribute("username");  // 세션에서 유저네임 반환
-            return userRepository.findById(userName)
-                    .map(User::toDto)
-                    .orElseThrow(()->new InvalidRequestException("No username"));
+    public User getCurrentUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);  // 세션이 없으면 예외 처리
+        if (session == null) {
+            throw new UnauthorizedUserException("No Session exist");
         }
-        return null;
+        String userName = (String) session.getAttribute("username");  // 세션에서 유저네임 반환
+        return userRepository.findById(userName)
+                .orElseThrow(()->new InvalidRequestException("No username"));
     }
 }

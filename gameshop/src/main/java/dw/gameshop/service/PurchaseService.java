@@ -44,10 +44,10 @@ public class PurchaseService {
         return purchaseRepository.findAll().stream().map(Purchase::toDto).toList();
     }
 
+    // [관리자 권한] 유저별 구매내역 조회 - 관리자 권한이 있어야 확인 가능
     public List<PurchaseDTO> getPurchaseListByUserName(String userName, HttpServletRequest request) {
-        // 관리자 권한이 있어야 확인 가능
-        UserDTO currentUser = userService.getCurrentUser(request);
-        if (!currentUser.getRole().equals("ADMIN")) {
+        User currentUser = userService.getCurrentUser(request);
+        if (!currentUser.getAuthority().getAuthorityName().equals("ADMIN")) {
             throw new PermissionDeniedException("권한이 없습니다.");
         }
         User user = userRepository.findById(userName)
@@ -56,10 +56,11 @@ public class PurchaseService {
                 .map(Purchase::toDto).toList();
     }
 
-    // 현재 세션 유저 이름으로 구매한 게임 찾기
+    // [일반 권한] 현재 세션 유저의 구매내역 조회
     public List<PurchaseDTO> getPurchaseListByCurrentUser(HttpServletRequest request) {
-        UserDTO userDTO = userService.getCurrentUser(request);
-        return getPurchaseListByUserName(userDTO.getUserName(), request);
+        User currentUser = userService.getCurrentUser(request);
+        return purchaseRepository.findByUser(currentUser).stream()
+                .map(Purchase::toDto).toList();
     }
 }
 

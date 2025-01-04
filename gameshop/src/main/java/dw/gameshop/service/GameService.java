@@ -3,7 +3,6 @@ package dw.gameshop.service;
 import dw.gameshop.exception.ResourceNotFoundException;
 import dw.gameshop.model.Game;
 import dw.gameshop.repository.GameRepository;
-import dw.gameshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

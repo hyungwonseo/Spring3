@@ -29,7 +29,7 @@ public class ReviewController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/game/id/{id}")
+    @GetMapping("/game/id/{gameId}")
     public ResponseEntity<List<ReviewDTO>> getReviewsByGameId(@PathVariable long gameId) {
         return new ResponseEntity<>(
                 reviewService.getReviewsByGameId(gameId),

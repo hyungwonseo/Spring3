@@ -1,9 +1,6 @@
 package com.dw.companyapp.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -15,6 +12,7 @@ import lombok.*;
 @Table(name="제품")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="제품번호")
     private long productId;
     @Column(name="제품명")

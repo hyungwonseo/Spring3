@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @ToString
 public class ProductDTO {
-    private int productId;
+    private Long productId;
     private String productName;
     private double unitPrice;
     private int stock;

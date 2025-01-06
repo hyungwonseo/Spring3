@@ -1,6 +1,8 @@
 package com.dw.companyapp.controller;
 
+import com.dw.companyapp.dto.CityOrderAmountDTO;
 import com.dw.companyapp.dto.OrderRequestDTO;
+import com.dw.companyapp.dto.YearOrderCountDTO;
 import com.dw.companyapp.model.Order;
 import com.dw.companyapp.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class OrderController {
 
     // 과제 4-5 도시별로 주문금액합 결과를 내림차순 정렬하여 조회하는 API
     @GetMapping("/orders/city/orderamount/{limit}")
-    public ResponseEntity<List<Map<String, Double>>>
+    public ResponseEntity<List<CityOrderAmountDTO>>
         getTopCitiesByTotalOrderAmount(@PathVariable int limit) {
         return new ResponseEntity<>(
                 orderService.getTopCitiesByTotalOrderAmount(limit),
@@ -71,7 +73,7 @@ public class OrderController {
 
     // 과제 4-6 도시를 매개변수로 해당 도시의 년도별 주문건수를 조회하는 API
     @GetMapping("/orders/ordercount/year/{city}")
-    public ResponseEntity<List<Map<String, Double>>>
+    public ResponseEntity<List<YearOrderCountDTO>>
         getOrderCountByYearForCity(@PathVariable String city) {
         return new ResponseEntity<>(
                 orderService.getOrderCountByYearForCity(city),

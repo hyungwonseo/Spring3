@@ -2,7 +2,6 @@ package dw.gameshop.controller;
 
 import dw.gameshop.model.User;
 import dw.gameshop.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -27,10 +26,10 @@ public class FileUploadController {
     UserService userService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             // 현재 세션의 userName을 사용하여 세션별로 폴더 저장위치를 구별함
-            User currentUser = userService.getCurrentUser(request);
+            User currentUser = userService.getCurrentUser();
             // 업로드 폴더확인, 없으면 생성
             Path uploadPath = Paths.get(uploadDir, currentUser.getUsername());
             if (!Files.exists(uploadPath)) {
@@ -62,10 +61,10 @@ public class FileUploadController {
     }
 
     @GetMapping("/download/{fileName}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
         try {
             // 현재 세션의 userName을 사용하여 세션별로 폴더 저장위치를 구별함
-            User currentUser = userService.getCurrentUser(request);
+            User currentUser = userService.getCurrentUser();
             Path filePath = Paths.get(uploadDir, currentUser.getUsername()).resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 

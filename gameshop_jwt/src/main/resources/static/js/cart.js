@@ -1,59 +1,50 @@
-const url = "/api/purchase/save/list";
+const urlPurchase = "/api/purchase/save/list";
 const urlSession = "/api/user/current-user";
 
 function sessionCurrent() {
   const jwtToken = sessionStorage.getItem("jwt-token");
+  const username = sessionStorage.getItem("username");
   if (!jwtToken) {
     alert("로그인해주세요.");
+    window.location.href = "/login.html";
     return;
   }
-  axios
-    .get(urlSession, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    })
-    .then((response) => {
-      console.log("데이터:", response.data);
-      const userId = response.data.username;
-      const authority = response.data.authority[0].authority;
-      let cartItems = JSON.parse(localStorage.getItem(userId));
-      if (cartItems && cartItems.length > 0) {
-        displayCart(cartItems, userId);
-        const data = cartItems.map((game) => {
-          // PurchaseDTO 객체를 만들어서 리턴
-          return {
-            game: game,
-            user: {
-              userName: userId,
-              password: "",
-              email: "",
-              realName: "",
-              role: authority,
-            },
-          };
-        });
-        document.querySelector(".purchaseBtn").addEventListener("click", () => {
-          if (confirm("구매하시겠습니까?")) {
-            axios
-              .post(url, data, { withCredentials: true })
-              .then((response) => {
-                console.log("데이터:", response.data);
-                localStorage.removeItem(userId);
-                window.location.reload();
-              })
-              .catch((error) => {
-                console.log("에러 발생:", error.response.data);
-              });
-          }
-        });
-      }
-    })
-    .catch((error) => {
-      console.log("에러 발생:", error.response.data);
-      alert("로그인해주세요.");
+  let cartItems = JSON.parse(localStorage.getItem(username));
+  if (cartItems && cartItems.length > 0) {
+    displayCart(cartItems, username);
+    const data = cartItems.map((game) => {
+      // PurchaseDTO 객체를 만들어서 리턴
+      return {
+        game: game,
+        user: {
+          username: username,
+          password: "",
+          email: "",
+          realName: "",
+          role: "",
+        },
+      };
     });
+    document.querySelector(".purchaseBtn").addEventListener("click", () => {
+      if (confirm("구매하시겠습니까?")) {
+        axios
+          .post(urlPurchase, data, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
+          .then((response) => {
+            console.log("데이터:", response.data);
+            localStorage.removeItem(username);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log("에러 발생:", error);
+          });
+      }
+    });
+  }
 }
 
 function displayCart(games, userId) {

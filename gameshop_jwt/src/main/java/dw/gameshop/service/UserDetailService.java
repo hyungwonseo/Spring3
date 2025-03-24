@@ -1,5 +1,6 @@
 package dw.gameshop.service;
 
+import dw.gameshop.exception.ResourceNotFoundException;
 import dw.gameshop.model.User;
 import dw.gameshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findById((username));
         if (user.isEmpty()) {
-            throw new IllegalArgumentException(username);
+            throw new ResourceNotFoundException("No username : " + username);
         }
         return user.get();
     }

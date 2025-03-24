@@ -1,14 +1,12 @@
 package dw.gameshop.service;
 
 import dw.gameshop.dto.PurchaseDTO;
-import dw.gameshop.dto.UserDTO;
-import dw.gameshop.exception.PermissionDeniedException;
 import dw.gameshop.exception.ResourceNotFoundException;
+import dw.gameshop.exception.UnauthorizedUserException;
 import dw.gameshop.model.Purchase;
 import dw.gameshop.model.User;
 import dw.gameshop.repository.PurchaseRepository;
 import dw.gameshop.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -68,7 +66,7 @@ public class PurchaseService {
     public List<PurchaseDTO> getPurchaseListByCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new IllegalStateException("User is not authenticated");
+            throw new UnauthorizedUserException("User is not authenticated");
         }
         String userId = authentication.getName();
         Optional<User> userOptional = userRepository.findById(userId);

@@ -10,6 +10,7 @@ function sessionCurrent() {
   const jwtToken = sessionStorage.getItem("jwt-token");
   if (!jwtToken) {
     alert("로그인해주세요.");
+    window.location.href = "/login.html";
     return;
   }
   axios
@@ -22,16 +23,20 @@ function sessionCurrent() {
     .then((response) => {
       console.log("데이터:", response.data);
       console.log("세션 유지");
-      const userId = response.data.userName;
-      const authority = response.data.authority[0].authority;
-      if (authority == "ADMIN") {
+      const authority = response.data.authority;
+      if (authority == "ROLE_ADMIN") {
         adminPage.classList.remove("hidden");
         userPage.classList.add("hidden");
-      } else if (authority == "USER") {
+      } else if (authority == "ROLE_USER") {
         adminPage.classList.add("hidden");
         userPage.classList.remove("hidden");
         axios
-          .get(urlPurchaseByCurrent, { withCredentials: true })
+          .get(urlPurchaseByCurrent, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
           .then((response) => {
             console.log("데이터:", response.data);
             displayPurchaseInfo(response.data);
@@ -105,7 +110,7 @@ function displayPurchaseInfo(games) {
     num.textContent = index + 1;
     gameId.textContent = data.game.id;
     title.textContent = data.game.title;
-    userId.textContent = data.user.userName;
+    userId.textContent = data.user.username;
     date.textContent = formatPurchaseDate(data.purchaseTime);
     // appendChild 부모자식 위치 설정
     tr.appendChild(num);

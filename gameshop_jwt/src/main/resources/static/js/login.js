@@ -44,6 +44,7 @@ document.querySelector(".loginBtn").addEventListener("click", () => {
     .then((response) => {
       console.log("데이터: ", response.data);
       sessionStorage.setItem("jwt-token", response.data.token);
+      sessionStorage.setItem("username", userId);
       window.location.reload();
     })
     .catch((error) => {
@@ -53,6 +54,7 @@ document.querySelector(".loginBtn").addEventListener("click", () => {
 document.querySelector(".logoutBtn").addEventListener("click", () => {
   if (confirm("로그아웃하시겠습니까?")) {
     sessionStorage.removeItem("jwt-token");
+    sessionStorage.removeItem("username");
     window.location.reload();
   }
 });
@@ -84,28 +86,15 @@ function signup() {
 
 function sessionCurrent() {
   const jwtToken = sessionStorage.getItem("jwt-token");
+  const username = sessionStorage.getItem("username");
   if (!jwtToken) {
-    alert("로그인해주세요.");
     return;
   }
-  axios
-    .get(urlSession, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    })
-    .then((response) => {
-      console.log("데이터:", response.data);
-      console.log("세션 유지");
-      document.querySelector(".login-box").classList.add("hidden");
-      document.querySelector(".user-box").classList.remove("hidden");
-      document.querySelector(".user-box p").textContent =
-        response.data.username + "님, 환영합니다.";
-    })
-    .catch((error) => {
-      console.log("에러 발생:", error.response.data);
-    });
+  console.log("세션 유지");
+  document.querySelector(".login-box").classList.add("hidden");
+  document.querySelector(".user-box").classList.remove("hidden");
+  document.querySelector(".user-box p").textContent =
+    username + "님, 환영합니다.";
 }
 
 // js 파일이 로드될때 호출됨

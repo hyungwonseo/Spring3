@@ -7,9 +7,9 @@ import dw.gameshop.exception.UnauthorizedUserException;
 import dw.gameshop.model.User;
 import dw.gameshop.repository.AuthorityRepository;
 import dw.gameshop.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class UserService {
                         passwordEncoder.encode(userDTO.getPassword()),
                         userDTO.getEmail(),
                         userDTO.getRealName(),
-                        authorityRepository.findById("USER")
+                        authorityRepository.findById("ROLE_USER")
                                 .orElseThrow(()->new ResourceNotFoundException("No role")),
                         LocalDateTime.now())
                 ).toDto();
@@ -44,17 +44,16 @@ public class UserService {
 
     public boolean validateUser(String username, String password) {
         User user = userRepository.findById(username)
-                .orElseThrow(()->new InvalidRequestException("Invalid Username"));
+                .orElseThrow(()->new ResourceNotFoundException("Invalid Username"));
         return passwordEncoder.matches(password, user.getPassword());
     }
 
-    public User getCurrentUser(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);  // 세션이 없으면 예외 처리
-        if (session == null) {
-            throw new UnauthorizedUserException("No Session exist");
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new UnauthorizedUserException("User is not authenticated");
         }
-        String userName = (String) session.getAttribute("username");  // 세션에서 유저네임 반환
-        return userRepository.findById(userName)
-                .orElseThrow(()->new InvalidRequestException("No username"));
+        return userRepository.findById(authentication.getName())
+                .orElseThrow(()->new ResourceNotFoundException("No username"));
     }
 }

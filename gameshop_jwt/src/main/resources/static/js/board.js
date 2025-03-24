@@ -7,35 +7,20 @@ let dataList = [];
 let pageCurrent = 1;
 let pageEnd = 1;
 const itemsPerPage = 5;
-let currentUser = {};
 const jwtToken = sessionStorage.getItem("jwt-token");
+const username = sessionStorage.getItem("username");
 
 function sessionCurrent() {
   if (!jwtToken) {
     alert("로그인해주세요.");
+    window.location.href = "/login.html";
     return;
   }
-  axios
-    .get(urlSession, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    })
-    .then((response) => {
-      console.log("데이터:", response.data);
-      currentUser = response.data;
-      const modal = document.querySelector(".modal");
-      const backdrop = document.querySelector(".backdrop");
-      modal.classList.remove("hidden");
-      backdrop.classList.remove("hidden");
-      document.querySelector(".modal-writer").textContent =
-        currentUser.userName;
-    })
-    .catch((error) => {
-      console.log("에러 발생:", error.response.data);
-      alert("로그인해주세요.");
-    });
+  const modal = document.querySelector(".modal");
+  const backdrop = document.querySelector(".backdrop");
+  modal.classList.remove("hidden");
+  backdrop.classList.remove("hidden");
+  document.querySelector(".modal-writer").textContent = username;
 }
 
 function getBoard() {
@@ -208,10 +193,15 @@ document.querySelector(".modal-save-btn").addEventListener("click", () => {
     id: 0,
     title: title,
     content: content,
-    authorName: currentUser.userName,
+    authorName: username,
   };
   axios
-    .post(urlSaveBoard, data, { withCredentials: true })
+    .post(urlSaveBoard, data, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
     .then((response) => {
       console.log("데이터:", response.data);
       alert("글을 성공적으로 저장하였습니다.");

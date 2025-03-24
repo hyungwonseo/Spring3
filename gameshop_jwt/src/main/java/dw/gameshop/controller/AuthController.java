@@ -1,6 +1,6 @@
 package dw.gameshop.controller;
 
-import dw.gameshop.dto.TokenDto;
+import dw.gameshop.dto.TokenDTO;
 import dw.gameshop.dto.UserDTO;
 import dw.gameshop.jwt.JwtFilter;
 import dw.gameshop.jwt.TokenProvider;
@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authenticate(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<TokenDTO> authenticate(@RequestBody UserDTO userDTO) {
         
         // 1. 유저정보와 DB상의 정보를 비교하기 위해 시큐리티인증객체 형태로 만듬
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -52,7 +52,7 @@ public class AuthController {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
         return new ResponseEntity<>(
-                new TokenDto(jwt),
+                new TokenDTO(jwt),
                 httpHeaders,
                 HttpStatus.OK);
     }

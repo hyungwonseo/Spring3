@@ -61,20 +61,17 @@ function displaySingleProduct(data) {
 }
 
 function sessionCurrent(data) {
-  axios
-    .get(urlSession, { withCredentials: true })
-    .then((response) => {
-      console.log("데이터:", response.data);
-      const userName = response.data.userName;
-      let cartItems = JSON.parse(localStorage.getItem(userName));
-      if (!cartItems) {
-        cartItems = [];
-      }
-      cartItems.push(data);
-      localStorage.setItem(userName, JSON.stringify(cartItems));
-    })
-    .catch((error) => {
-      console.log("에러 발생:", error.response.data);
-      alert("로그인해주세요.");
-    });
+  const jwtToken = sessionStorage.getItem("jwt-token");
+  const username = sessionStorage.getItem("username");
+  if (!jwtToken) {
+    alert("로그인해주세요.");
+    window.location.href = "/login.html";
+    return;
+  }
+  let cartItems = JSON.parse(localStorage.getItem(username));
+  if (!cartItems) {
+    cartItems = [];
+  }
+  cartItems.push(data);
+  localStorage.setItem(username, JSON.stringify(cartItems));
 }

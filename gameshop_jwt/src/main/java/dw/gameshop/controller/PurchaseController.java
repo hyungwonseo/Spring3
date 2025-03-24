@@ -3,10 +3,10 @@ package dw.gameshop.controller;
 import dw.gameshop.dto.PurchaseDTO;
 import dw.gameshop.model.Purchase;
 import dw.gameshop.service.PurchaseService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +32,7 @@ public class PurchaseController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<PurchaseDTO>> getAllPurchases() {
         return new ResponseEntity<>(
                 purchaseService.getAllPurchases(),
@@ -40,6 +41,7 @@ public class PurchaseController {
 
     // 유저별 구매내역 조회. 관리자 권한이 있어야 조회 가능
     @GetMapping("/user/{userName}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<List<PurchaseDTO>> getPurchaseListByUserName(@PathVariable String userName) {
         return new ResponseEntity<>(
                 purchaseService.getPurchaseListByUserName(userName),

@@ -1,21 +1,19 @@
 package dw.gameshop.dto;
 
 import dw.gameshop.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
 public class UserDTO {
     private String username;
     private String password;
     private String email;
     private String realName;
-    private String role;
+    private String authority;
 
     public static UserDTO toUserDto(User user) {
         return new UserDTO(

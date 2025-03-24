@@ -8,10 +8,20 @@ let pageCurrent = 1;
 let pageEnd = 1;
 const itemsPerPage = 5;
 let currentUser = {};
+const jwtToken = sessionStorage.getItem("jwt-token");
 
 function sessionCurrent() {
+  if (!jwtToken) {
+    alert("로그인해주세요.");
+    return;
+  }
   axios
-    .get(urlSession, { withCredentials: true })
+    .get(urlSession, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
     .then((response) => {
       console.log("데이터:", response.data);
       currentUser = response.data;
@@ -29,8 +39,17 @@ function sessionCurrent() {
 }
 
 function getBoard() {
+  if (!jwtToken) {
+    alert("로그인해주세요.");
+    return;
+  }
   axios
-    .get(urlBoard, { withCredentials: true })
+    .get(urlBoard, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
     .then((response) => {
       console.log("데이터:", response.data);
       dataList = response.data;

@@ -1,4 +1,5 @@
-const urlLogin = "/api/user/login";
+// const urlLogin = "/api/user/login";
+const urlAuthenticate = "/api/authenticate";
 const urlLogout = "/api/user/logout";
 const urlSignup = "/api/user/register";
 const urlSession = "/api/user/current-user";
@@ -36,14 +37,15 @@ document.querySelector("#userEmail").addEventListener("change", (e) => {
 
 document.querySelector(".loginBtn").addEventListener("click", () => {
   const data = {
-    userName: userId,
+    username: userId,
     password: password,
   };
   axios
-    .post(urlLogin, data, { withCredentials: true })
+    .post(urlAuthenticate, data, { withCredentials: true })
     .then((response) => {
       console.log("데이터: ", response.data);
-      sessionCurrent();
+      sessionStorage.setItem("jwt-token", response.data.token);
+      window.location.reload();
     })
     .catch((error) => {
       console.log("에러 발생: ", error.response.data);
@@ -51,21 +53,13 @@ document.querySelector(".loginBtn").addEventListener("click", () => {
 });
 document.querySelector(".logoutBtn").addEventListener("click", () => {
   if (confirm("로그아웃하시겠습니까?")) {
-    axios
-      .post(urlLogout, {}, { withCredentials: true })
-      .then((response) => {
-        console.log("데이터:", response.data);
-        document.querySelector(".login-box").classList.remove("hidden");
-        document.querySelector(".user-box").classList.add("hidden");
-      })
-      .catch((error) => {
-        console.log("에러 발생:", error.response.data);
-      });
+    sessionStorage.removeItem("jwt-token");
+    window.location.reload();
   }
 });
 document.querySelector(".signupBtn").addEventListener("click", () => {
   const data = {
-    userName: userNameSignup,
+    username: userNameSignup,
     password: passwordSignup,
     realName: realName,
     email: userEmail,

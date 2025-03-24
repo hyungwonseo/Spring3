@@ -1,0 +1,32 @@
+<JWT 추가 프로세스>
+
+1. pom.xml 
+: spring-boot-starter-security 와 jjwt 추가
+
+2. jwt 폴더 추가
+: JwtFilter 와 TokenProvider 추가
+
+3. application.properties
+: jwt.secret 과 jwt.token-validity-in-seconds 추가
+
+4. User 엔티티 수정
+: UserDetails 상속 및 메서드 오버라이딩
+
+5. UserDetailService 만들기
+: @Service 어노테이션
+: UserDetailsService 상속 및 메서드 오버라이딩
+
+6. SecurityConfig 만들기
+: 환경설정. Spring Security의 보안 설정을 담당
+- 요청 경로에 따른 접근 제어
+- 세션 관리 및 CSRF 설정
+- JWT 필터 추가
+- AuthenticationManager 설정
+- 비밀번호 암호화
+
+7. AuthController 만들기
+: JWT인증 컨트롤러
+
+8. 자바스크립트 코드 작성
+: 프론트사이드 JWT 사용 흐름
+로그인 -> 토큰저장(zustand이용) -> 허용된 요청경로제외 모든 요청에는 토큰 필요 -> 서버에러 발생시 다시 로그인

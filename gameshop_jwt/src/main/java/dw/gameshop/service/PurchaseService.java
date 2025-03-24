@@ -11,6 +11,8 @@ import dw.gameshop.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -51,22 +53,31 @@ public class PurchaseService {
     }
 
     // [관리자 권한] 유저별 구매내역 조회 - 관리자 권한이 있어야 확인 가능
-    public List<PurchaseDTO> getPurchaseListByUserName(String userName, HttpServletRequest request) {
-        User currentUser = userService.getCurrentUser(request);
-        if (!currentUser.getAuthority().getAuthorityName().equals("ADMIN")) {
-            throw new PermissionDeniedException("권한이 없습니다.");
+    public List<PurchaseDTO> getPurchaseListByUserName(String userName) {
+        // 유저이름으로 유저객체 찾기
+        Optional<User> userOptional = userRepository.findById(userName);
+        if (userOptional.isEmpty()) {
+            throw new ResourceNotFoundException("해당 유저 이름이 없습니다. : " + userName);
         }
-        User user = userRepository.findById(userName)
-                .orElseThrow(()->new ResourceNotFoundException("해당 유저가 없습니다. ID : " + userName));
-        return purchaseRepository.findByUser(user).stream()
-                .map(Purchase::toDto).toList();
+        return purchaseRepository.findByUser(userOptional.get()).stream()
+                .map(PurchaseDTO::toPurchaseDto)
+                .collect(Collectors.toList());
     }
 
     // [일반 권한] 현재 세션 유저의 구매내역 조회
-    public List<PurchaseDTO> getPurchaseListByCurrentUser(HttpServletRequest request) {
-        User currentUser = userService.getCurrentUser(request);
-        return purchaseRepository.findByUser(currentUser).stream()
-                .map(Purchase::toDto).toList();
+    public List<PurchaseDTO> getPurchaseListByCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("User is not authenticated");
+        }
+        String userId = authentication.getName();
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isEmpty()) {
+            throw new ResourceNotFoundException("해당 유저가 없습니다. ID : " + userId);
+        }
+        return purchaseRepository.findByUser(userOptional.get()).stream()
+                .map(PurchaseDTO::toPurchaseDto)
+                .collect(Collectors.toList());
     }
 }
 

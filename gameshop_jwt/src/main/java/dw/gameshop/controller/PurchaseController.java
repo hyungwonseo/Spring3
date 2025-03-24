@@ -40,18 +40,17 @@ public class PurchaseController {
 
     // 유저별 구매내역 조회. 관리자 권한이 있어야 조회 가능
     @GetMapping("/user/{userName}")
-    public ResponseEntity<List<PurchaseDTO>> getPurchaseListByUserName(@PathVariable String userName,
-                                                                       HttpServletRequest request) {
+    public ResponseEntity<List<PurchaseDTO>> getPurchaseListByUserName(@PathVariable String userName) {
         return new ResponseEntity<>(
-                purchaseService.getPurchaseListByUserName(userName, request),
+                purchaseService.getPurchaseListByUserName(userName),
                 HttpStatus.OK);
     }
 
     // 현재 로그인한 유저의 구매정보 조회
     @GetMapping("/current-user")
-    public ResponseEntity<List<PurchaseDTO>> getPurchaseListByCurrentUser(HttpServletRequest request) {
+    public ResponseEntity<List<PurchaseDTO>> getPurchaseListByCurrentUser() {
         return new ResponseEntity<>(
-                purchaseService.getPurchaseListByCurrentUser(request),
+                purchaseService.getPurchaseListByCurrentUser(),
                 HttpStatus.OK);
     }
 }

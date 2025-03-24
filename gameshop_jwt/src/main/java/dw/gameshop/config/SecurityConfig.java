@@ -36,7 +36,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/*.html"),
                                 new AntPathRequestMatcher("/api/authenticate"),
                                 new AntPathRequestMatcher("/api/products/**"),
-//                                new AntPathRequestMatcher("/api/board/**"),
+                                new AntPathRequestMatcher("/api/board/all"),
                                 new AntPathRequestMatcher("/api/user/register"),
                                 new AntPathRequestMatcher("/api/game/**"),
                                 new AntPathRequestMatcher("/css/**"),

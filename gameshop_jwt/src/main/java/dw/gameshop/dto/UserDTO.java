@@ -16,4 +16,14 @@ public class UserDTO {
     private String email;
     private String realName;
     private String role;
+
+    public static UserDTO toUserDto(User user) {
+        return new UserDTO(
+                user.getUsername(),
+                null,
+                user.getRealName(),
+                user.getEmail(),
+                user.getAuthority().getAuthorityName()
+        );
+    }
 }

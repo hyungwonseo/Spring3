@@ -7,13 +7,23 @@ const adminPage = document.querySelector(".admin_page");
 const userPage = document.querySelector(".user_page");
 
 function sessionCurrent() {
+  const jwtToken = sessionStorage.getItem("jwt-token");
+  if (!jwtToken) {
+    alert("로그인해주세요.");
+    return;
+  }
   axios
-    .get(urlSession, { withCredentials: true })
+    .get(urlSession, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
     .then((response) => {
       console.log("데이터:", response.data);
       console.log("세션 유지");
       const userId = response.data.userName;
-      const authority = response.data.role;
+      const authority = response.data.authority[0].authority;
       if (authority == "ADMIN") {
         adminPage.classList.remove("hidden");
         userPage.classList.add("hidden");
@@ -32,33 +42,36 @@ function sessionCurrent() {
       } else {
         console.log("에러! 여기오면 안되는데..");
       }
-      document
-        .querySelector(".pageSubmitBtn")
-        .addEventListener("click", () => {
-          const dropdown = document.querySelector("#dropdown");
-          const selectedUserId = document.querySelector("#userIdInput").value;
-          let url = "";
-          if (dropdown.value == "userId") {
-            if (selectedUserId == "" || selectedUserId == null) {
-              alert("유저 아이디를 입력해주세요.");
-              return;
-            } else {
-              url = urlPurchaseById + selectedUserId;
-            }
+      document.querySelector(".pageSubmitBtn").addEventListener("click", () => {
+        const dropdown = document.querySelector("#dropdown");
+        const selectedUserId = document.querySelector("#userIdInput").value;
+        let url = "";
+        if (dropdown.value == "userId") {
+          if (selectedUserId == "" || selectedUserId == null) {
+            alert("유저 아이디를 입력해주세요.");
+            return;
           } else {
-            url = urlPurchaseAll;
+            url = urlPurchaseById + selectedUserId;
           }
-          axios
-            .get(url, { withCredentials: true })
-            .then((response) => {
-              console.log("데이터:", response.data);
-              displayPurchaseInfo(response.data);
-            })
-            .catch((error) => {
-              console.log("에러 발생:", error.response.data);
-              alert("입력하신 유저 아이디는 존재하지 않습니다.");
-            });
-        });
+        } else {
+          url = urlPurchaseAll;
+        }
+        axios
+          .get(url, {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${jwtToken}`,
+            },
+          })
+          .then((response) => {
+            console.log("데이터:", response.data);
+            displayPurchaseInfo(response.data);
+          })
+          .catch((error) => {
+            console.log("에러 발생:", error.response.data);
+            alert("입력하신 유저 아이디는 존재하지 않습니다.");
+          });
+      });
     })
     .catch((error) => {
       console.log("에러 발생:", error.response.data);

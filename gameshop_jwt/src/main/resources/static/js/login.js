@@ -1,4 +1,3 @@
-// const urlLogin = "/api/user/login";
 const urlAuthenticate = "/api/authenticate";
 const urlLogout = "/api/user/logout";
 const urlSignup = "/api/user/register";
@@ -84,15 +83,25 @@ function signup() {
 }
 
 function sessionCurrent() {
+  const jwtToken = sessionStorage.getItem("jwt-token");
+  if (!jwtToken) {
+    alert("로그인해주세요.");
+    return;
+  }
   axios
-    .get(urlSession, { withCredentials: true })
+    .get(urlSession, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
     .then((response) => {
       console.log("데이터:", response.data);
       console.log("세션 유지");
       document.querySelector(".login-box").classList.add("hidden");
       document.querySelector(".user-box").classList.remove("hidden");
       document.querySelector(".user-box p").textContent =
-        response.data.userName + "님, 환영합니다.";
+        response.data.username + "님, 환영합니다.";
     })
     .catch((error) => {
       console.log("에러 발생:", error.response.data);

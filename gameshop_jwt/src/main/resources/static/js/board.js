@@ -39,16 +39,9 @@ function sessionCurrent() {
 }
 
 function getBoard() {
-  if (!jwtToken) {
-    alert("로그인해주세요.");
-    return;
-  }
   axios
     .get(urlBoard, {
       withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
     })
     .then((response) => {
       console.log("데이터:", response.data);

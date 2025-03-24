@@ -2,12 +2,22 @@ const url = "/api/purchase/save/list";
 const urlSession = "/api/user/current-user";
 
 function sessionCurrent() {
+  const jwtToken = sessionStorage.getItem("jwt-token");
+  if (!jwtToken) {
+    alert("로그인해주세요.");
+    return;
+  }
   axios
-    .get(urlSession, { withCredentials: true })
+    .get(urlSession, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    })
     .then((response) => {
       console.log("데이터:", response.data);
-      const userId = response.data.userName;
-      const authority = response.data.role;
+      const userId = response.data.username;
+      const authority = response.data.authority[0].authority;
       let cartItems = JSON.parse(localStorage.getItem(userId));
       if (cartItems && cartItems.length > 0) {
         displayCart(cartItems, userId);
@@ -15,25 +25,29 @@ function sessionCurrent() {
           // PurchaseDTO 객체를 만들어서 리턴
           return {
             game: game,
-            user: { userName: userId, password: "", email: "", realName: "", role: authority },
+            user: {
+              userName: userId,
+              password: "",
+              email: "",
+              realName: "",
+              role: authority,
+            },
           };
         });
-        document
-          .querySelector(".purchaseBtn")
-          .addEventListener("click", () => {
-            if (confirm("구매하시겠습니까?")) {
-              axios
-                .post(url, data, { withCredentials: true })
-                .then((response) => {
-                  console.log("데이터:", response.data);
-                  localStorage.removeItem(userId);
-                  window.location.reload();
-                })
-                .catch((error) => {
-                  console.log("에러 발생:", error.response.data);
-                });
-            }
-          });
+        document.querySelector(".purchaseBtn").addEventListener("click", () => {
+          if (confirm("구매하시겠습니까?")) {
+            axios
+              .post(url, data, { withCredentials: true })
+              .then((response) => {
+                console.log("데이터:", response.data);
+                localStorage.removeItem(userId);
+                window.location.reload();
+              })
+              .catch((error) => {
+                console.log("에러 발생:", error.response.data);
+              });
+          }
+        });
       }
     })
     .catch((error) => {

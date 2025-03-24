@@ -1,5 +1,6 @@
 package dw.gameshop.controller;
 
+import dw.gameshop.dto.SessionDto;
 import dw.gameshop.dto.UserDTO;
 import dw.gameshop.exception.UnauthorizedUserException;
 import dw.gameshop.model.User;
@@ -10,6 +11,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -51,8 +54,15 @@ public class UserController {
     }
 
     @GetMapping("/current-user")
-    public ResponseEntity<UserDTO> getCurrentUser(HttpServletRequest request) {
-        User user = userService.getCurrentUser(request);
-        return new ResponseEntity<>(user.toDto(), HttpStatus.OK);
+    public ResponseEntity<SessionDto> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("User is not authenticated");
+        }
+        SessionDto sessionDto = new SessionDto();
+        sessionDto.setUsername(authentication.getName());
+        sessionDto.setAuthority(authentication.getAuthorities());
+
+        return new ResponseEntity<>(sessionDto, HttpStatus.OK);
     }
 }

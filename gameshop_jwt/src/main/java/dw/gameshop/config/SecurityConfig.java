@@ -33,13 +33,13 @@ public class SecurityConfig {
         return http
                 .authorizeRequests(auth -> auth
                         .requestMatchers(
+                                new AntPathRequestMatcher("/*.html"),
                                 new AntPathRequestMatcher("/api/authenticate"),
                                 new AntPathRequestMatcher("/api/products/**"),
                                 new AntPathRequestMatcher("/api/board/**"),
                                 new AntPathRequestMatcher("/api/user/login"),
                                 new AntPathRequestMatcher("/api/user/signup"),
-                                new AntPathRequestMatcher("/gameshop/**"),
-                                new AntPathRequestMatcher("/*"),
+                                new AntPathRequestMatcher("/api/game/**"),
                                 new AntPathRequestMatcher("/css/**"),
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/img/**"),

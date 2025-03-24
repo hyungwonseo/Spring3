@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>GAME SHOP</h1>
+    </div>
+    <div class="menu">
+      <div><a href="index.html">HOME</a></div>
+      <div><a href="board.html">BOARD</a></div>
+      <div><a href="mypage.html">MY PAGE</a></div>
+      <div><a href="login.html">LOGIN</a></div>
+      <div><a href="cart.html">CART</a></div>
+    </div>
+    <div class="cart">
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>게임</th>
+            <th>타이틀</th>
+            <th>장르</th>
+            <th>가격</th>
+              <th>삭제</th>
+          </tr>
+        </thead>
+          <tbody class="cart-body"></tbody>
+        </table>
+        <div class="purchaseBtn">구매하기</div>
+        <div class="totalprice"></div>
+      </div>
+      <div class="footer">
+        <h3>FOOTER</h3>
+      </div>
+    </div>
+    <script src="/js/cart.js"></script>
+  </body>
+</html>

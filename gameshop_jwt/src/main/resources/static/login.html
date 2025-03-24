@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>GAME SHOP</h1>
+    </div>
+    <div class="menu">
+      <div><a href="index.html">HOME</a></div>
+      <div><a href="board.html">BOARD</a></div>
+      <div><a href="mypage.html">MY PAGE</a></div>
+      <div><a href="login.html">LOGIN</a></div>
+      <div><a href="cart.html">CART</a></div>
+    </div>
+    <div class="login">
+      <div class="login-box">
+        <label>User Name</label>
+        <input type="text" id="userId" />
+        <label>Password</label>
+        <input type="password" id="password" />
+        <div></div>
+        <div class="loginBtn">Login</div>
+        <button onclick="signup()">회원가입</button>
+      </div>
+      <div class="user-box hidden">
+        <p></p>
+        <div class="logoutBtn">Logout</div>
+      </div>
+      <div class="signup-box hidden">
+        <label>User Name</label>
+        <input type="text" id="userNameSignup" />
+        <label>Password</label>
+        <input type="password" id="passwordSignup" />
+        <label>Real Name</label>
+        <input type="text" id="realName" />
+        <label>User Email</label>
+        <input type="text" id="userEmail" />
+        <div></div>
+        <div class="signupBtn">Signup</div>        
+      </div>
+    </div>
+    <div class="footer">
+      <h3>FOOTER</h3>
+    </div>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Upload Image To Static Directory</h1>
+    <form id="uploadForm">
+        <input type="file" id="fileInput" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+    <p id="message"></p>
+    <p id="image"></p>
+
+    <script>
+    // 1. 이미지파일을 정적 저장공간(폴더)에 저장하기
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 폼의 기본 제출 동작을 막음
+
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        const message = document.getElementById('message');
+
+        if (!file) {
+            message.textContent = 'Please select a file.';
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        axios.post('/api/upload', formData, {withCredentials: true})
+        .then(response => {
+            message.textContent = response.data;
+            const image = document.getElementById('image');
+            const img = document.createElement('img');
+            axios.get("/api/download/"+file.name, {withCredentials: true, responseType: 'blob'})
+            .then(response => {
+                // Blob 데이터를 URL로 변환하여 이미지로 표시
+                const imageUrl = URL.createObjectURL(response.data);
+                img.src = imageUrl;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                message.textContent = 'Failed to upload file';
+            });
+            image.appendChild(img);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            message.textContent = 'Failed to upload file';
+        });
+    });
+    </script>
+</body>
+</html>

@@ -38,7 +38,7 @@ public class PurchaseService {
             Purchase purchase = new Purchase(
                     0,
                     purchaseDTO.getGame(),
-                    userRepository.findById(purchaseDTO.getUser().getUserName())
+                    userRepository.findById(purchaseDTO.getUser().getUsername())
                             .orElseThrow(()->new ResourceNotFoundException("No User")),
                     LocalDateTime.now()
             );

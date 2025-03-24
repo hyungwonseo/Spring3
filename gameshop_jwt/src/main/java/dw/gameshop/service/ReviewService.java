@@ -30,7 +30,7 @@ public class ReviewService {
                 0,
                 gameRepository.findByTitle(reviewDTO.getGameTitle())
                     .orElseThrow(()->new ResourceNotFoundException("No Game Title")),
-                userRepository.findById(reviewDTO.getUserName())
+                userRepository.findById(reviewDTO.getUsername())
                     .orElseThrow(()->new ResourceNotFoundException("No Username")),
                 GameRating.valueOf(reviewDTO.getReviewPoint()),
                 reviewDTO.getReviewText(),

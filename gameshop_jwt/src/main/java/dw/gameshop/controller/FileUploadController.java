@@ -32,7 +32,7 @@ public class FileUploadController {
             // 현재 세션의 userName을 사용하여 세션별로 폴더 저장위치를 구별함
             User currentUser = userService.getCurrentUser(request);
             // 업로드 폴더확인, 없으면 생성
-            Path uploadPath = Paths.get(uploadDir, currentUser.getUserName());
+            Path uploadPath = Paths.get(uploadDir, currentUser.getUsername());
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
@@ -66,7 +66,7 @@ public class FileUploadController {
         try {
             // 현재 세션의 userName을 사용하여 세션별로 폴더 저장위치를 구별함
             User currentUser = userService.getCurrentUser(request);
-            Path filePath = Paths.get(uploadDir, currentUser.getUserName()).resolve(fileName).normalize();
+            Path filePath = Paths.get(uploadDir, currentUser.getUsername()).resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() || resource.isReadable()) {

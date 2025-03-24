@@ -36,7 +36,7 @@ public class Review {
         return new ReviewDTO(
                 this.id,
                 this.game.getTitle(),
-                this.user.getUserName(),
+                this.user.getUsername(),
                 this.point.name(),
                 this.reviewText
         );

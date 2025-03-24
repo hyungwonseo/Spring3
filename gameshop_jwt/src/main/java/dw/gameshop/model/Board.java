@@ -36,7 +36,7 @@ public class Board {
                 this.id,
                 this.title,
                 this.content,
-                this.author.getUserName(),
+                this.author.getUsername(),
                 this.modifiedDate
         );
     }

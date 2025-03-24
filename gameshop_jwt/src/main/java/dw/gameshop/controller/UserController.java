@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO,
                                         HttpServletRequest request) {
-        String username = userDTO.getUserName();
+        String username = userDTO.getUsername();
         String password = userDTO.getPassword();
 
         if (userService.validateUser(username, password)) {

@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class UserDTO {
-    private String userName;
+    private String username;
     private String password;
     private String email;
     private String realName;

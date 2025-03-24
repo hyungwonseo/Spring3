@@ -26,13 +26,13 @@ public class UserService {
     AuthorityRepository authorityRepository;
 
     public UserDTO registerUser(UserDTO userDTO) {
-        Optional<User> user = userRepository.findById(userDTO.getUserName());
+        Optional<User> user = userRepository.findById(userDTO.getUsername());
         if (user.isPresent()) {
             throw new InvalidRequestException("Username already exists");
         }
         return userRepository.save(
                     new User(
-                        userDTO.getUserName(),
+                        userDTO.getUsername(),
                         passwordEncoder.encode(userDTO.getPassword()),
                         userDTO.getEmail(),
                         userDTO.getRealName(),

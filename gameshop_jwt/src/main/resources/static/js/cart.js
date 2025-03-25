@@ -2,22 +2,21 @@ const urlPurchase = "/api/purchase/save/list";
 const urlSession = "/api/user/current-user";
 
 function sessionCurrent() {
-  const jwtToken = sessionStorage.getItem("jwt-token");
-  const username = sessionStorage.getItem("username");
+  const jwtToken = JSON.parse(sessionStorage.getItem("jwt-token"));
   if (!jwtToken) {
     alert("로그인해주세요.");
     window.location.href = "/login.html";
     return;
   }
-  let cartItems = JSON.parse(localStorage.getItem(username));
+  let cartItems = JSON.parse(localStorage.getItem(jwtToken.username));
   if (cartItems && cartItems.length > 0) {
-    displayCart(cartItems, username);
+    displayCart(cartItems, jwtToken.username);
     const data = cartItems.map((game) => {
       // PurchaseDTO 객체를 만들어서 리턴
       return {
         game: game,
         user: {
-          username: username,
+          username: jwtToken.username,
           password: "",
           email: "",
           realName: "",
@@ -31,12 +30,12 @@ function sessionCurrent() {
           .post(urlPurchase, data, {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${jwtToken}`,
+              Authorization: `Bearer ${jwtToken.token}`,
             },
           })
           .then((response) => {
             console.log("데이터:", response.data);
-            localStorage.removeItem(username);
+            localStorage.removeItem(jwtToken.username);
             window.location.reload();
           })
           .catch((error) => {

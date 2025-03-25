@@ -7,8 +7,7 @@ let dataList = [];
 let pageCurrent = 1;
 let pageEnd = 1;
 const itemsPerPage = 5;
-const jwtToken = sessionStorage.getItem("jwt-token");
-const username = sessionStorage.getItem("username");
+const jwtToken = JSON.parse(sessionStorage.getItem("jwt-token"));
 
 function sessionCurrent() {
   if (!jwtToken) {
@@ -20,7 +19,7 @@ function sessionCurrent() {
   const backdrop = document.querySelector(".backdrop");
   modal.classList.remove("hidden");
   backdrop.classList.remove("hidden");
-  document.querySelector(".modal-writer").textContent = username;
+  document.querySelector(".modal-writer").textContent = jwtToken.username;
 }
 
 function getBoard() {
@@ -193,13 +192,13 @@ document.querySelector(".modal-save-btn").addEventListener("click", () => {
     id: 0,
     title: title,
     content: content,
-    authorName: username,
+    authorName: jwtToken.username,
   };
   axios
     .post(urlSaveBoard, data, {
       withCredentials: true,
       headers: {
-        Authorization: `Bearer ${jwtToken}`,
+        Authorization: `Bearer ${jwtToken.token}`,
       },
     })
     .then((response) => {

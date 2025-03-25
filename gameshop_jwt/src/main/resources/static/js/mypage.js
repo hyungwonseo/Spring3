@@ -7,7 +7,7 @@ const adminPage = document.querySelector(".admin_page");
 const userPage = document.querySelector(".user_page");
 
 function sessionCurrent() {
-  const jwtToken = sessionStorage.getItem("jwt-token");
+  const jwtToken = JSON.parse(sessionStorage.getItem("jwt-token"));
   if (!jwtToken) {
     alert("로그인해주세요.");
     window.location.href = "/login.html";
@@ -17,7 +17,7 @@ function sessionCurrent() {
     .get(urlSession, {
       withCredentials: true,
       headers: {
-        Authorization: `Bearer ${jwtToken}`,
+        Authorization: `Bearer ${jwtToken.token}`,
       },
     })
     .then((response) => {
@@ -34,7 +34,7 @@ function sessionCurrent() {
           .get(urlPurchaseByCurrent, {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${jwtToken}`,
+              Authorization: `Bearer ${jwtToken.token}`,
             },
           })
           .then((response) => {
@@ -65,7 +65,7 @@ function sessionCurrent() {
           .get(url, {
             withCredentials: true,
             headers: {
-              Authorization: `Bearer ${jwtToken}`,
+              Authorization: `Bearer ${jwtToken.token}`,
             },
           })
           .then((response) => {

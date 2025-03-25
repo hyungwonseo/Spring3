@@ -61,17 +61,16 @@ function displaySingleProduct(data) {
 }
 
 function sessionCurrent(data) {
-  const jwtToken = sessionStorage.getItem("jwt-token");
-  const username = sessionStorage.getItem("username");
+  const jwtToken = JSON.parse(sessionStorage.getItem("jwt-token"));
   if (!jwtToken) {
     alert("로그인해주세요.");
     window.location.href = "/login.html";
     return;
   }
-  let cartItems = JSON.parse(localStorage.getItem(username));
+  let cartItems = JSON.parse(localStorage.getItem(jwtToken.username));
   if (!cartItems) {
     cartItems = [];
   }
   cartItems.push(data);
-  localStorage.setItem(username, JSON.stringify(cartItems));
+  localStorage.setItem(jwtToken.username, JSON.stringify(cartItems));
 }

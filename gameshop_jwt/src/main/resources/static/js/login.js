@@ -43,8 +43,7 @@ document.querySelector(".loginBtn").addEventListener("click", () => {
     .post(urlAuthenticate, data, { withCredentials: true })
     .then((response) => {
       console.log("데이터: ", response.data);
-      sessionStorage.setItem("jwt-token", response.data.token);
-      sessionStorage.setItem("username", userId);
+      sessionStorage.setItem("jwt-token", JSON.stringify(response.data));
       window.location.reload();
     })
     .catch((error) => {
@@ -54,7 +53,6 @@ document.querySelector(".loginBtn").addEventListener("click", () => {
 document.querySelector(".logoutBtn").addEventListener("click", () => {
   if (confirm("로그아웃하시겠습니까?")) {
     sessionStorage.removeItem("jwt-token");
-    sessionStorage.removeItem("username");
     window.location.reload();
   }
 });
@@ -85,8 +83,7 @@ function signup() {
 }
 
 function sessionCurrent() {
-  const jwtToken = sessionStorage.getItem("jwt-token");
-  const username = sessionStorage.getItem("username");
+  const jwtToken = JSON.parse(sessionStorage.getItem("jwt-token"));
   if (!jwtToken) {
     return;
   }
@@ -94,7 +91,7 @@ function sessionCurrent() {
   document.querySelector(".login-box").classList.add("hidden");
   document.querySelector(".user-box").classList.remove("hidden");
   document.querySelector(".user-box p").textContent =
-    username + "님, 환영합니다.";
+    jwtToken.username + "님, 환영합니다.";
 }
 
 // js 파일이 로드될때 호출됨

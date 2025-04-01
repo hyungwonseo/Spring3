@@ -1,0 +1,98 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f7fc;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+h2 {
+  color: #2b4f81;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2b4f81;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-right: 6px;
+}
+
+button:hover {
+  background-color: #1d355d;
+}
+
+.module {
+  border: 1px solid #ccc;
+  background: white;
+  padding: 10px;
+  border-left: 5px solid #2b4f81;
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.module > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+#module-container {
+  margin-bottom: 20px;
+}
+
+#courseTitle,
+#roomCode {
+  margin-bottom: 10px;
+  width: 300px;
+}
+
+#output {
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.holiday-module {
+  background-color: #fffbe6;
+  padding: 6px;
+  border: 1px dashed #999;
+  border-left: 5px solid #f0a500;
+  margin-bottom: 6px;
+}
+
+#holiday-module-container {
+  margin-bottom: 10px;
+}
+
+h3 {
+  color: #f0a500;
+}
+
+#downloadJson,
+#uploadJson {
+  background-color: #3ca370;
+}
+
+#downloadJson:hover {
+  background-color: #31885c;
+}

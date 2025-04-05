@@ -45,7 +45,9 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/css/**"),
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/img/**"),
-                                new AntPathRequestMatcher("/mp4/**")
+                                new AntPathRequestMatcher("/mp4/**"),
+                                new AntPathRequestMatcher("/swagger-ui/**"),
+                                new AntPathRequestMatcher("/v3/api-docs/**")
                         ).permitAll()
                         .requestMatchers("/uploads/**").denyAll()
                         .anyRequest().authenticated())

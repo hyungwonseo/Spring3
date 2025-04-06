@@ -1,59 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios@1.7.2/dist/axios.min.js"></script>
     <title>Document</title>
-</head>
-<body>
-    <h1>Upload Image To Static Directory</h1>
-    <form id="uploadForm">
-        <input type="file" id="fileInput" accept="image/*" required>
-        <button type="submit">Upload</button>
-    </form>
-    <p id="message"></p>
-    <p id="image"></p>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">
+        <h1>GAME SHOP</h1>
+      </div>
+      <div class="menu">
+        <div><a href="index.html">HOME</a></div>
+        <div><a href="board.html">BOARD</a></div>
+        <div><a href="mypage.html">MY PAGE</a></div>
+        <div><a href="login.html">LOGIN</a></div>
+        <div><a href="cart.html">CART</a></div>
+        <div><a href="upload.html">FILE</a></div>
+      </div>
+      <div style="min-height: 600px; padding: 10px;">
+        <h1>Upload Image To Static Directory</h1>
+        <form id="uploadForm">
+          <input type="file" id="fileInput" accept="image/*" required />
+          <button type="submit">Upload</button>
+        </form>
+        <p id="message"></p>
+        <p id="image"></p>
+      </div>
+      <div class="footer">
+        <h3>FOOTER</h3>
+      </div>
+    </div>
 
     <script>
-    // 1. 이미지파일을 정적 저장공간(폴더)에 저장하기
-    document.getElementById('uploadForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // 폼의 기본 제출 동작을 막음
+      const jwtToken = JSON.parse(sessionStorage.getItem("jwt-token"));
+      if (!jwtToken) {
+        alert("로그인해주세요.");
+        window.location.href = "/login.html";
+      }
+      // 1. 이미지파일을 정적 저장공간(폴더)에 저장하기
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // 폼의 기본 제출 동작을 막음
 
-        const fileInput = document.getElementById('fileInput');
-        const file = fileInput.files[0];
-        const message = document.getElementById('message');
+          const fileInput = document.getElementById("fileInput");
+          const file = fileInput.files[0];
+          const message = document.getElementById("message");
 
-        if (!file) {
-            message.textContent = 'Please select a file.';
+          if (!file) {
+            message.textContent = "Please select a file.";
             return;
-        }
+          }
 
-        const formData = new FormData();
-        formData.append('file', file);
+          const formData = new FormData();
+          formData.append("file", file);
 
-        axios.post('/api/upload', formData, {withCredentials: true})
-        .then(response => {
-            message.textContent = response.data;
-            const image = document.getElementById('image');
-            const img = document.createElement('img');
-            axios.get("/api/download/"+file.name, {withCredentials: true, responseType: 'blob'})
-            .then(response => {
-                // Blob 데이터를 URL로 변환하여 이미지로 표시
-                const imageUrl = URL.createObjectURL(response.data);
-                img.src = imageUrl;
+          axios
+            .post("/api/upload", formData, {
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${jwtToken.token}`,
+              },
             })
-            .catch(error => {
-                console.error('Error:', error);
-                message.textContent = 'Failed to upload file';
+            .then((response) => {
+              message.textContent = response.data;
+              const image = document.getElementById("image");
+              const img = document.createElement("img");
+              axios
+                .get("/api/download/" + file.name, {
+                  withCredentials: true,
+                  responseType: "blob",
+                  headers: {
+                    Authorization: `Bearer ${jwtToken.token}`,
+                  },
+                })
+                .then((response) => {
+                  // Blob 데이터를 URL로 변환하여 이미지로 표시
+                  const imageUrl = URL.createObjectURL(response.data);
+                  img.src = imageUrl;
+
+                  // 다운로드를 하려면 아래처럼 link 이벤트를 생성해야함 - 코드시작
+                  // const blob = new Blob([response.data]); // 1. Blob 생성
+                  // const url = window.URL.createObjectURL(blob); // 2. 임시 URL 생성
+                  // const link = document.createElement("a"); // 3. a 태그 생성
+                  // link.href = url;
+                  // link.download = file.name; // 4. 저장될 파일 이름 지정
+                  // document.body.appendChild(link); // 5. DOM에 붙이고
+                  // link.click(); // 6. 클릭 트리거로 다운로드
+                  // link.remove(); // 7. 클릭 후 제거
+                  // window.URL.revokeObjectURL(url); // 8. 메모리 정리
+                  // 다운로드 - 코드끝
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                  message.textContent = "Failed to upload file";
+                });
+              image.appendChild(img);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              message.textContent = "Failed to upload file";
             });
-            image.appendChild(img);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            message.textContent = 'Failed to upload file';
         });
-    });
     </script>
-</body>
+  </body>
 </html>

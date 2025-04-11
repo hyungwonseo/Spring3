@@ -1,5 +1,6 @@
 package dw.gameshop.controller;
 
+import dw.gameshop.config.SecurityConfig;
 import dw.gameshop.dto.TokenDTO;
 import dw.gameshop.dto.UserDTO;
 import dw.gameshop.jwt.JwtFilter;
@@ -35,7 +36,7 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDTO> authenticate(@RequestBody UserDTO userDTO) {
-        
+        System.out.println(SecurityConfig.dotenv.get("MYAPP_API_KEY"));
         // 1. 유저정보와 DB상의 정보를 비교하기 위해 시큐리티인증객체 형태로 만듬
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userDTO.getUsername(),

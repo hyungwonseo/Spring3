@@ -5,6 +5,7 @@ import dw.gameshop.exception.MyAuthenticationEntryPoint;
 import dw.gameshop.jwt.JwtFilter;
 import dw.gameshop.jwt.TokenProvider;
 import dw.gameshop.service.UserDetailService;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -77,4 +78,10 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    // 외부 .env파일로부터 변수를 읽기위한 코드
+    public static final Dotenv dotenv = Dotenv.configure()
+            .filename(".env")
+            .ignoreIfMissing()
+            .load();
 }

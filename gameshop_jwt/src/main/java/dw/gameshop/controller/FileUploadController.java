@@ -1,5 +1,6 @@
 package dw.gameshop.controller;
 
+import dw.gameshop.dto.FileDTO;
 import dw.gameshop.model.User;
 import dw.gameshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -26,7 +28,7 @@ public class FileUploadController {
     UserService userService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@ModelAttribute FileDTO fileDTO) {
         try {
             // 현재 세션의 userName을 사용하여 세션별로 폴더 저장위치를 구별함
             User currentUser = userService.getCurrentUser();
@@ -36,22 +38,30 @@ public class FileUploadController {
                 Files.createDirectories(uploadPath);
             }
             // 동일파일이 존재하면 "파일이름_1.확장자" 방식으로 카운트를 증가시켜서 중복저장을 회피함
-            String originalFileName = file.getOriginalFilename();
-            String fileName = originalFileName;
-            int counter = 1;
-            while (Files.exists(uploadPath.resolve(fileName))) { // 파일 이름 중복 검사
-                int dotIndex = originalFileName.lastIndexOf(".");
-                String name = dotIndex == -1 ? originalFileName : originalFileName.substring(0, dotIndex);
-                String extension = dotIndex == -1 ? "" : originalFileName.substring(dotIndex);
-                fileName = name + "_" + counter + extension;
-                counter++;
-            }
-            // 파일이름을 저장위치와 조합
-            Path copyLocation = uploadPath.resolve(fileName).normalize();
-            // 파일저장
-            Files.copy(file.getInputStream(), copyLocation);
+            System.out.println(fileDTO.getFiles().stream().map((f)-> f.getOriginalFilename()).collect(Collectors.joining(", ")));
+            fileDTO.getFiles().stream().forEach((f) -> {
+                String originalFileName = f.getOriginalFilename();
+                String fileName = originalFileName;
+                int counter = 1;
+                while (Files.exists(uploadPath.resolve(fileName))) { // 파일 이름 중복 검사
+                    int dotIndex = originalFileName.lastIndexOf(".");
+                    String name = dotIndex == -1 ? originalFileName : originalFileName.substring(0, dotIndex);
+                    String extension = dotIndex == -1 ? "" : originalFileName.substring(dotIndex);
+                    fileName = name + "_" + counter + extension;
+                    counter++;
+                }
+                // 파일이름을 저장위치와 조합
+                // normalize()는 파일명이 상대경로(예, ../filename.txt)일 경우, ..를 제거함
+                Path copyLocation = uploadPath.resolve(fileName).normalize();
+                // 파일저장
+                try {
+                    Files.copy(f.getInputStream(), copyLocation);
+                } catch (IOException e) {
+                    e.printStackTrace(); // 혹은 로깅
+                }
+            });
             return new ResponseEntity<>(
-                    "File uploaded successfully: " + fileName,
+                    "File uploaded successfully: ",
                     HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(

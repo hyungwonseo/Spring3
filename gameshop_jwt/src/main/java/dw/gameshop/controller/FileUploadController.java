@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -90,4 +91,30 @@ public class FileUploadController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @DeleteMapping("/delete/{fileName}")
+    public ResponseEntity<?> deleteFile(@PathVariable String fileName) {
+        try {
+            // 현재 세션의 userName을 사용하여 세션별로 폴더 저장위치를 구별함
+            User currentUser = userService.getCurrentUser();
+            Path filePath = Paths.get(uploadDir, currentUser.getUsername()).resolve(fileName).normalize();
+            File file = filePath.toFile();
+
+            if (file.exists() && file.isFile()) {
+                if (file.delete()) {
+                    // 삭제 성공 시 HTTP 200 응답
+                    return ResponseEntity.ok().build();
+                } else {
+                    // 파일이 존재하지만 삭제에 실패한 경우 (예: 권한 문제 등)
+                    return ResponseEntity.internalServerError().build();
+                }
+            } else {
+                // 파일이 존재하지 않거나 파일이 아닌 경우
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }
